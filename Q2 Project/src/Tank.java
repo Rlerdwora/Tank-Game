@@ -140,7 +140,7 @@ public class Tank{
 		
 		
 		g2.drawImage(img, tx, null);
-		g.drawRect(x, y, 94, 94);
+		//g.drawRect(x, y, 94, 94);
 	}
 
 	

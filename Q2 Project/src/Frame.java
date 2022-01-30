@@ -15,16 +15,15 @@ import javax.swing.Timer;
 
 public class Frame extends JPanel implements ActionListener, MouseListener, KeyListener {
 	
-	Tank p1 = new Tank(10,10,1,"Right");
-	Tank p2 = new Tank(1400,10,2,"Left");
-	
+	Background b = new Background();
+	Tank p1 = new Tank(0,0,1,"Right");
 	
 	
 	public void paint(Graphics g) {
 		super.paintComponent(g);
+		b.paint(g);
 		p1.paint(g);
-		p2.paint(g);
-
+		
 	}
 	
 	public static void main(String[] arg) {

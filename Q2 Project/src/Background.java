@@ -10,70 +10,38 @@ import java.net.URL;
 public class Background{
 	
 	//image related variables
-	int x, y, xv, yv;
-	private Image img; 	
-	private AffineTransform tx;
+	private Tile[][] b = new Tile[14][7];
 
-	public Background(int x, int y) {
-		this.x = x;
-		this.y = y;
-		tx = AffineTransform.getTranslateInstance(x, y );
-		init(x, y); 				//initialize the location of the image
-									//use your variables
-	}
-
-	public void moveRight() {
-		xv = 10;
-	}
-	
-	public void moveLeft() {
-		
-	}
-	
-	
-	
-	/* update variables here */
-	private void update() {
-		x += xv;
-		y += yv;
-		
-		
-		
+	public Background() {
+		for(int x = 0; x < 14; x ++) {
+			for(int y = 0; y < 7; y ++) {
+				b[x][y] = new Tile(84 * x, 1 + 84 * y, "grass");
+			}
+		}
 	}
 	
 	/* Drawing commands */
 	public void paint(Graphics g) {
 		//these are the 2 lines of code needed draw an image on the screen
 		Graphics2D g2 = (Graphics2D) g;
-		
-		
-		//call update to update the actualy picture location
-		update();
-		
-		
-		
-		
-		g2.drawImage(img, tx, null);
-		g.drawRect(x, y, 20, 20);
-		
 
-	}
-
-	
-	private void init(double a, double b) {
-		tx.setToTranslation(a, b);
-		tx.scale(2.7, 2.5);
-	}
-
-	private Image getImage(String path) {
-		Image tempImage = null;
-		try {
-			URL imageURL = Background.class.getResource(path);
-			tempImage = Toolkit.getDefaultToolkit().getImage(imageURL);
-		} catch (Exception e) {
-			e.printStackTrace();
+		for(int i = 0; i < 14; i ++) {
+			for(int j = 0; j < 7; j ++) {
+				b[i][j].paint(g);
+			}
 		}
-		return tempImage;
+		
+		int x = 0, y = 1, xCount = 0, yCount = 0;
+		
+		while(xCount < 14) {
+			x = 0;
+			y = 1;
+			while(yCount < 7) {
+				g.drawRect(x + 84 * xCount, y + 84 * yCount, 84, 84);
+				yCount ++;
+			}
+			yCount = 0;
+			xCount ++;
+		}
 	}
-
 }
