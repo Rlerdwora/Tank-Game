@@ -7,14 +7,14 @@ import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.net.URL;
 
-public class Background{
+public class Crate{
 	
 	//image related variables
 	int x, y, xv, yv;
 	private Image img; 	
 	private AffineTransform tx;
 
-	public Background(int x, int y) {
+	public Crate(int x, int y) {
 		this.x = x;
 		this.y = y;
 		tx = AffineTransform.getTranslateInstance(x, y );
@@ -68,7 +68,7 @@ public class Background{
 	private Image getImage(String path) {
 		Image tempImage = null;
 		try {
-			URL imageURL = Background.class.getResource(path);
+			URL imageURL = Crate.class.getResource(path);
 			tempImage = Toolkit.getDefaultToolkit().getImage(imageURL);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -15,15 +15,16 @@ import javax.swing.Timer;
 
 public class Frame extends JPanel implements ActionListener, MouseListener, KeyListener {
 	
-	//CREATE THE OBJECT (STEP 1)
-	private Background bg = new Background(0, 0);
-
-
+	Tank p1 = new Tank(10,10,1,"Right");
+	Tank p2 = new Tank(1400,10,2,"Left");
+	
+	
+	
 	public void paint(Graphics g) {
 		super.paintComponent(g);
-		bg.paint(g);
+		p1.paint(g);
+		p2.paint(g);
 
-		
 	}
 	
 	public static void main(String[] arg) {
@@ -31,8 +32,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	}
 	
 	public Frame() {
-		JFrame f = new JFrame("Crossy Street");
-		f.setSize(new Dimension(600, 400));
+		JFrame f = new JFrame("Tank Game");
+		f.setSize(new Dimension(1600, 800));
 		f.setBackground(Color.blue);
 		f.add(this);
 		f.setResizable(false);
@@ -81,14 +82,43 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-			System.out.println(arg0.getKeyCode());
-
+		System.out.println(arg0.getKeyCode());
+		
+		if(arg0.getKeyCode() == 87) {
+			p1.moveUp();
+		}
+		
+		if(arg0.getKeyCode() == 65) {
+			p1.moveLeft();
+		}
+		
+		if(arg0.getKeyCode() == 83) {
+			p1.moveDown();
+		}
+		
+		if(arg0.getKeyCode() == 68) {
+			p1.moveRight();
+		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub
+		if(arg0.getKeyCode() == 87) {
+			p1.stopMoveUp();
+		}
 		
+		if(arg0.getKeyCode() == 65) {
+			p1.stopMoveLeft();
+		}
+		
+		if(arg0.getKeyCode() == 83) {
+			p1.stopMoveDown();
+		}
+		
+		if(arg0.getKeyCode() == 68) {
+			p1.stopMoveRight();
+		}
 	}
 
 	@Override
