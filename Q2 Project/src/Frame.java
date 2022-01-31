@@ -12,18 +12,23 @@ import java.awt.event.MouseListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import java.util.ArrayList;
 
 public class Frame extends JPanel implements ActionListener, MouseListener, KeyListener {
 	
 	Background b = new Background();
 	Tank p1 = new Tank(0,0,1,"Right");
+	ArrayList<Shell> p1Shells = new ArrayList<Shell>();
+	int stage;
 	
 	
 	public void paint(Graphics g) {
 		super.paintComponent(g);
 		b.paint(g);
 		p1.paint(g);
-		
+		for(Shell x : p1Shells) {
+			x.paint(g);
+		}
 	}
 	
 	public static void main(String[] arg) {
@@ -32,7 +37,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	
 	public Frame() {
 		JFrame f = new JFrame("Tank Game");
-		f.setSize(new Dimension(1600, 800));
+		f.setSize(new Dimension(1190, 627));
 		f.setBackground(Color.blue);
 		f.add(this);
 		f.setResizable(false);
@@ -97,6 +102,11 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		
 		if(arg0.getKeyCode() == 68) {
 			p1.moveRight();
+		}
+		
+		if(arg0.getKeyCode() == 70) {
+			Shell s = new Shell(p1.getX(), p1.getY(), p1.getH(), p1.getV());
+			p1Shells.add(s);
 		}
 	}
 

@@ -20,6 +20,14 @@ public class Background{
 		}
 	}
 	
+	public Background(int i) {
+		for(int x = 0; x < 14; x ++) {
+			for(int y = 0; y < 7; y ++) {
+				b[x][y] = new Tile(84 * x, 1 + 84 * y, "grass");
+			}
+		}
+	}
+	
 	/* Drawing commands */
 	public void paint(Graphics g) {
 		//these are the 2 lines of code needed draw an image on the screen

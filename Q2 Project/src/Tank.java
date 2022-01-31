@@ -28,19 +28,19 @@ public class Tank{
 	}
 
 	public void moveRight() {
-		xv = 3;
+		xv = 4;
 	}
 	
 	public void moveLeft() {
-		xv = -3;
+		xv = -4;
 	}
 	
 	public void moveUp() {
-		yv = -3;
+		yv = -4;
 	}
 	
 	public void moveDown() {
-		yv = 3;
+		yv = 4;
 	}
 	
 	public void stopMoveRight() {
@@ -67,6 +67,21 @@ public class Tank{
 		}
 	}
 	
+	public int getX() {
+		return x;
+	}
+	
+	public int getY() {
+		return y;
+	}
+	
+	public String getH() {
+		return horizontal;
+	}
+	
+	public String getV() {
+		return vertical;
+	}
 	
 	/* update variables here */
 	private void update() {
@@ -96,29 +111,21 @@ public class Tank{
 		}else if(yv < 0 && xv < 0) {
 			horizontal = "Left";
 			vertical = "Up";
-			xv = -2;
-			yv = -2;
 			xPos = -13;
 			yPos = -13;
 		}else if(yv < 0 && xv > 0) {
 			horizontal = "Right";
 			vertical = "Up";
-			xv = 2;
-			yv = -2;
 			xPos = -9;
 			yPos = -13;
 		}else if(yv > 0 && xv < 0) {
 			horizontal = "Left";
 			vertical = "Down";
-			xv = -2;
-			yv = 2;
 			xPos = -14;
 			yPos = -10;
 		}else if(yv > 0 && xv > 0) {
 			horizontal = "Right";
 			vertical = "Down";
-			xv = 2;
-			yv = 2;
 			xPos = -10;
 			yPos = -10;
 		}
