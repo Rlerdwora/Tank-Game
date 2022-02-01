@@ -10,48 +10,22 @@ import java.net.URL;
 public class Wall{
 	
 	//image related variables
-	int x, y, xv, yv;
+	int x, y;
 	private Image img; 	
 	private AffineTransform tx;
 
-	public Wall(int x, int y) {
+	public Wall(int x, int y, String side) {
 		this.x = x;
 		this.y = y;
+		img = getImage("/imgs/wall" + side + ".png");
 		tx = AffineTransform.getTranslateInstance(x, y );
-		init(x, y); 				//initialize the location of the image
-									//use your variables
-	}
-
-	public void moveRight() {
-		xv = 10;
-	}
-	
-	public void moveLeft() {
-		
-	}
-	
-	
-	
-	/* update variables here */
-	private void update() {
-		x += xv;
-		y += yv;
-		
-		
-		
+		init(x, y);
 	}
 	
 	/* Drawing commands */
 	public void paint(Graphics g) {
 		//these are the 2 lines of code needed draw an image on the screen
 		Graphics2D g2 = (Graphics2D) g;
-		
-		
-		//call update to update the actualy picture location
-		update();
-		
-		
-		
 		
 		g2.drawImage(img, tx, null);
 		g.drawRect(x, y, 20, 20);

@@ -6,11 +6,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.net.URL;
+import java.awt.color.*;
 
 public class Tank{
 	
 	//image related variables
-	int x, y, xv, yv, number, xPos = 4, yPos = 6;
+	int x, y, xv, yv, number, xPos = 4, yPos = 6, shellTimer;
 	String horizontal, vertical;
 	private Image img; 	
 	private AffineTransform tx;
@@ -67,6 +68,10 @@ public class Tank{
 		}
 	}
 	
+	public void fire() {
+		shellTimer = 80;
+	}
+	
 	public int getX() {
 		return x;
 	}
@@ -81,6 +86,10 @@ public class Tank{
 	
 	public String getV() {
 		return vertical;
+	}
+	
+	public int getTimer() {
+		return shellTimer;
 	}
 	
 	/* update variables here */
@@ -130,6 +139,10 @@ public class Tank{
 			yPos = -10;
 		}
 		
+		if(shellTimer > 0) {
+			shellTimer --;
+		}
+		
 		img = getImage("/imgs/tank" + this.number + this.horizontal + vertical + ".png");
 		init(x + xPos, y + yPos);
 	}
@@ -147,7 +160,7 @@ public class Tank{
 		
 		
 		g2.drawImage(img, tx, null);
-		//g.drawRect(x, y, 94, 94);
+		g.fillRect(x + 8, y, shellTimer, 10);
 	}
 
 	

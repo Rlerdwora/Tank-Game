@@ -28,8 +28,8 @@ public class Shell{
 			xv = 10;
 			yv = 0;
 		}else if(horizontal == "Left" && vertical == "Up") {
-			xv = -10;
-			yv = 0;
+			xv = -7;
+			yv = -7;
 		}else if(horizontal == "Left" && vertical == "Down") {
 			xv = -7;
 			yv = 7;
@@ -64,8 +64,9 @@ public class Shell{
 		//these are the 2 lines of code needed draw an image on the screen
 		Graphics2D g2 = (Graphics2D) g;
 		
+		update();
+		
 		g2.drawImage(img, tx, null);
-		g.drawRect(x, y, 10, 10);
 	}
 
 	

@@ -104,7 +104,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			p1.moveRight();
 		}
 		
-		if(arg0.getKeyCode() == 70) {
+		if(arg0.getKeyCode() == 70 && p1.getTimer() == 0) {
+			p1.fire();
 			Shell s = new Shell(p1.getX(), p1.getY(), p1.getH(), p1.getV());
 			p1Shells.add(s);
 		}

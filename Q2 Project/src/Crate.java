@@ -10,47 +10,30 @@ import java.net.URL;
 public class Crate{
 	
 	//image related variables
-	int x, y, xv, yv;
+	int x, y, height, length;
 	private Image img; 	
 	private AffineTransform tx;
 
 	public Crate(int x, int y) {
 		this.x = x;
 		this.y = y;
+		img = getImage("/imgs/crate.png");
 		tx = AffineTransform.getTranslateInstance(x, y );
-		init(x, y); 				//initialize the location of the image
-									//use your variables
-	}
-
-	public void moveRight() {
-		xv = 10;
+		init(x, y);
 	}
 	
-	public void moveLeft() {
-		
-	}
-	
-	
-	
-	/* update variables here */
-	private void update() {
-		x += xv;
-		y += yv;
-		
-		
-		
+	public Crate(int x, int y, String side) {
+		this.x = x;
+		this.y = y;
+		img = getImage("/imgs/crate" + side + ".png");
+		tx = AffineTransform.getTranslateInstance(x, y );
+		init(x, y);
 	}
 	
 	/* Drawing commands */
 	public void paint(Graphics g) {
 		//these are the 2 lines of code needed draw an image on the screen
 		Graphics2D g2 = (Graphics2D) g;
-		
-		
-		//call update to update the actualy picture location
-		update();
-		
-		
 		
 		
 		g2.drawImage(img, tx, null);
