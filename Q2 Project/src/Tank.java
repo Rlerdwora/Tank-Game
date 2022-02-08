@@ -29,19 +29,35 @@ public class Tank{
 	}
 
 	public void moveRight() {
-		xv = 4;
+		if(yv == 0) {
+			xv = 4;
+		}else {
+			xv = 3;
+		}
 	}
 	
 	public void moveLeft() {
-		xv = -4;
+		if(yv == 0) {
+			xv = -4;
+		}else {
+			xv = -3;
+		}
 	}
 	
 	public void moveUp() {
-		yv = -4;
+		if(xv == 0) {
+			yv = -4;
+		}else {
+			yv = -3;
+		}
 	}
 	
 	public void moveDown() {
-		yv = 4;
+		if(xv == 0) {
+			yv = 4;
+		}else {
+			yv = 3;
+		}
 	}
 	
 	public void stopMoveRight() {
@@ -97,46 +113,71 @@ public class Tank{
 		x += xv;
 		y += yv;
 		
+		if(y < -5) {
+			y += 4;
+		}
+		if(y > 500) {
+			y -= 4;
+		}
+		if(x < -5) {
+			x += 4;
+		}
+		if(x > 1090) {
+			x -= 4;
+		}
+		
 		if(yv == 0 && xv < 0) {
 			horizontal = "Left";
 			vertical = "";
 			xPos = 4;
 			yPos = 6;
+			xv = -4;
 		}else if(yv == 0 && xv > 0) {
 			horizontal = "Right";
 			vertical = "";
 			xPos = 6;
 			yPos = 6;
+			xv = 4;
 		}else if(yv < 0 && xv == 0) {
 			horizontal = "";
 			vertical = "Up";
 			xPos = 7;
 			yPos = 5;
+			yv = -4;
 		}else if(yv > 0 && xv == 0) {
 			horizontal = "";
 			vertical = "Down";
 			xPos = 5;
 			yPos = 6;
+			yv = 4;
 		}else if(yv < 0 && xv < 0) {
 			horizontal = "Left";
 			vertical = "Up";
 			xPos = -13;
 			yPos = -13;
+			yv = -3;
+			xv = -3;
 		}else if(yv < 0 && xv > 0) {
 			horizontal = "Right";
 			vertical = "Up";
 			xPos = -9;
 			yPos = -13;
+			yv = -3;
+			xv = 3;
 		}else if(yv > 0 && xv < 0) {
 			horizontal = "Left";
 			vertical = "Down";
 			xPos = -14;
 			yPos = -10;
+			yv = 3;
+			xv = -3;
 		}else if(yv > 0 && xv > 0) {
 			horizontal = "Right";
 			vertical = "Down";
 			xPos = -10;
 			yPos = -10;
+			yv = 3;
+			xv = 3;
 		}
 		
 		if(shellTimer > 0) {

@@ -18,7 +18,9 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	
 	Background b = new Background();
 	Tank p1 = new Tank(0,0,1,"Right");
+	Tank p2 = new Tank(1000,0,2,"Left");
 	ArrayList<Shell> p1Shells = new ArrayList<Shell>();
+	ArrayList<Shell> p2Shells = new ArrayList<Shell>();
 	int stage;
 	
 	
@@ -26,6 +28,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		super.paintComponent(g);
 		b.paint(g);
 		p1.paint(g);
+		p2.paint(g);
 		for(Shell x : p1Shells) {
 			x.paint(g);
 		}
@@ -37,7 +40,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	
 	public Frame() {
 		JFrame f = new JFrame("Tank Game");
-		f.setSize(new Dimension(1190, 627));
+		f.setSize(new Dimension(1183, 619));
 		f.setBackground(Color.blue);
 		f.add(this);
 		f.setResizable(false);

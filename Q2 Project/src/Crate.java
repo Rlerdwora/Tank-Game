@@ -25,7 +25,14 @@ public class Crate{
 	public Crate(int x, int y, String side) {
 		this.x = x;
 		this.y = y;
-		img = getImage("/imgs/crate" + side + ".png");
+		if(side.equals("H")) {
+			length = 168;
+			height = 84;
+		}else{
+			length = 84;
+			height = 168;
+		}
+		img = getImage("/imgs/crateB" + side + ".png");
 		tx = AffineTransform.getTranslateInstance(x, y );
 		init(x, y);
 	}
@@ -37,9 +44,7 @@ public class Crate{
 		
 		
 		g2.drawImage(img, tx, null);
-		g.drawRect(x, y, 20, 20);
-		
-
+		g.drawRect(x, y, 84, 84);
 	}
 
 	
