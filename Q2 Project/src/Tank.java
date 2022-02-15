@@ -108,6 +108,14 @@ public class Tank{
 		return shellTimer;
 	}
 	
+	public void setX(int x) {
+		this.x = x;
+	}
+	
+	public void setY(int y) {
+		this.y = y;
+	}
+	
 	/* update variables here */
 	private void update() {
 		x += xv;
@@ -194,15 +202,12 @@ public class Tank{
 		//these are the 2 lines of code needed draw an image on the screen
 		Graphics2D g2 = (Graphics2D) g;
 		
-		
 		//call update to update the actualy picture location
 		update();
 		
-		
-		
-		
 		g2.drawImage(img, tx, null);
 		g.fillRect(x + 8, y, shellTimer, 10);
+		g.drawRect(x + 5, y + 6, 84, 84);
 	}
 
 	

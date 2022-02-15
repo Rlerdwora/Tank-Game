@@ -17,26 +17,25 @@ import java.util.ArrayList;
 public class Frame extends JPanel implements ActionListener, MouseListener, KeyListener {
 	
 	Background b = new Background();
-	Tank p1 = new Tank(0,0,1,"Right");
+	Tank p1 = new Tank(-5,0,1,"Right");
 	Tank p2 = new Tank(1000,0,2,"Left");
 	ArrayList<Shell> p1Shells = new ArrayList<Shell>();
-	ArrayList<Crate> crates = new ArrayList<Crate>();
-	Crate c = new Crate(84,85);
 	ArrayList<Shell> p2Shells = new ArrayList<Shell>();
-	int stage;
-	
+	ArrayList<Crate> crates = new ArrayList<Crate>();
+	static ArrayList<CrateParticle> particles = new ArrayList<CrateParticle>();
 	
 	public void paint(Graphics g) {
 		super.paintComponent(g);
 		b.paint(g);
 		for(Crate x : crates) {
 			x.paint(g);
+			x.checkCollision(p1);
+			for(Shell y : p1Shells) {
+				x.checkCollision(y);
+			}
 		}
 		for(Shell x : p1Shells) {
 			x.paint(g);
-			for(Crate y : crates) {
-				y.checkCollision(x);
-			}
 		}
 		p1.paint(g);
 	}
@@ -58,8 +57,6 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		t.start();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
-		
-		crates.add(c);
 	}
 	
 	@Override
