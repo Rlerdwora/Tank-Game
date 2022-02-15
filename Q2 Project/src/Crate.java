@@ -6,18 +6,24 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class Crate{
 	
 	//image related variables
-	int x, y, height, length;
+	private int x, y, height, length;
+	private boolean exploded;
+	private ArrayList<CrateParticle> particles = new ArrayList<CrateParticle>();
 	private Image img; 	
 	private AffineTransform tx;
 
 	public Crate(int x, int y) {
 		this.x = x;
 		this.y = y;
-		img = getImage("/imgs/crate.png");
+		length = 84;
+		height = 84;
+		exploded = false;
+		img = getImage("/imgs/crateA.png");
 		tx = AffineTransform.getTranslateInstance(x, y );
 		init(x, y);
 	}
@@ -25,9 +31,32 @@ public class Crate{
 	public Crate(int x, int y, String side) {
 		this.x = x;
 		this.y = y;
-		img = getImage("/imgs/crate" + side + ".png");
+		if(side.equals("H")) {
+			length = 168;
+			height = 84;
+		}else {
+			length = 84;
+			height = 168;
+		}
+		exploded = false;
+		img = getImage("/imgs/crateB" + side + ".png");
 		tx = AffineTransform.getTranslateInstance(x, y );
 		init(x, y);
+	}
+	
+	public void checkCollision(Tank x) {
+		
+	}
+	
+	public void checkCollision(Shell shell) {
+		if(shell.getX() + 55 > x && shell.getX() < x + length
+		&& shell.getY() + 52 > y && shell.getY() < y + height
+		&& exploded == false) {
+			shell.disappear();
+			exploded = true;
+			img = getImage("/imgs/crateDebris.png");
+			particles.add(new CrateParticle(x, y));
+		}
 	}
 	
 	/* Drawing commands */
@@ -35,9 +64,8 @@ public class Crate{
 		//these are the 2 lines of code needed draw an image on the screen
 		Graphics2D g2 = (Graphics2D) g;
 		
-		
 		g2.drawImage(img, tx, null);
-		g.drawRect(x, y, 20, 20);
+		g.drawRect(x, y, length, height);
 		
 
 	}
@@ -45,7 +73,7 @@ public class Crate{
 	
 	private void init(double a, double b) {
 		tx.setToTranslation(a, b);
-		tx.scale(2.7, 2.5);
+		tx.scale(.75, .75);
 	}
 
 	private Image getImage(String path) {

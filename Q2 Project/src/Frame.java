@@ -19,16 +19,24 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	Background b = new Background();
 	Tank p1 = new Tank(0,0,1,"Right");
 	ArrayList<Shell> p1Shells = new ArrayList<Shell>();
+	ArrayList<Crate> crates = new ArrayList<Crate>();
+	Crate c = new Crate(84,85);
 	int stage;
 	
 	
 	public void paint(Graphics g) {
 		super.paintComponent(g);
 		b.paint(g);
-		p1.paint(g);
-		for(Shell x : p1Shells) {
+		for(Crate x : crates) {
 			x.paint(g);
 		}
+		for(Shell x : p1Shells) {
+			x.paint(g);
+			for(Crate y : crates) {
+				y.checkCollision(x);
+			}
+		}
+		p1.paint(g);
 	}
 	
 	public static void main(String[] arg) {
@@ -37,7 +45,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	
 	public Frame() {
 		JFrame f = new JFrame("Tank Game");
-		f.setSize(new Dimension(1190, 627));
+		f.setSize(new Dimension(1191, 627));
 		f.setBackground(Color.blue);
 		f.add(this);
 		f.setResizable(false);
@@ -49,6 +57,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
 		
+		crates.add(c);
 	}
 	
 	@Override

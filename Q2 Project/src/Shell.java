@@ -50,6 +50,20 @@ public class Shell{
 									//use your variables
 	}
 	
+	public int getX() {
+		return x;
+	}
+	
+	public int getY() {
+		return y;
+	}
+	
+	public void disappear() {
+		xv = 0;
+		yv = 0;
+		x = -100;
+		y = -100;
+	}
 	
 	/* update variables here */
 	private void update() {
@@ -67,6 +81,7 @@ public class Shell{
 		update();
 		
 		g2.drawImage(img, tx, null);
+		g.drawRect(x + 30, y + 32, 25, 20);
 	}
 
 	
