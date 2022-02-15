@@ -18,9 +18,11 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	
 	Background b = new Background();
 	Tank p1 = new Tank(0,0,1,"Right");
+	Tank p2 = new Tank(1000,0,2,"Left");
 	ArrayList<Shell> p1Shells = new ArrayList<Shell>();
 	ArrayList<Crate> crates = new ArrayList<Crate>();
 	Crate c = new Crate(84,85);
+	ArrayList<Shell> p2Shells = new ArrayList<Shell>();
 	int stage;
 	
 	

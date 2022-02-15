@@ -65,9 +65,8 @@ public class Crate{
 		Graphics2D g2 = (Graphics2D) g;
 		
 		g2.drawImage(img, tx, null);
-		g.drawRect(x, y, length, height);
-		
 
+		g.drawRect(x, y, length, height);
 	}
 
 	
