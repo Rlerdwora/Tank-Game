@@ -15,16 +15,83 @@ public class Background{
 	public Background() {
 		for(int x = 0; x < 14; x ++) {
 			for(int y = 0; y < 7; y ++) {
-				b[x][y] = new Tile(84 * x, 1 + 84 * y, "grass");
+				b[x][y] = new Tile(x, y, "grass");
 			}
 		}
 	}
 	
 	public Background(int i) {
-		for(int x = 0; x < 14; x ++) {
-			for(int y = 0; y < 7; y ++) {
-				b[x][y] = new Tile(84 * x, 1 + 84 * y, "grass");
+		
+		//grassfield stage
+		if(i == 0) {
+			for(int x = 0; x < 14; x ++) {
+				for(int y = 0; y < 7; y ++) {
+					b[x][y] = new Tile(x, y, "grass");
+				}
 			}
+		}
+		//desert stage
+		else if(i == 1) {
+			for(int x = 0; x < 14; x ++) {
+				for(int y = 0; y < 7; y ++) {
+					b[x][y] = new Tile(x, y, "sand");
+				}
+			}
+		}
+		//warehouse stage
+		else if(i == 2) {
+			for(int x = 0; x < 14; x ++) {
+				for(int y = 0; y < 7; y ++) {
+					b[x][y] = new Tile(x, y, "stone");
+				}
+			}
+		}
+		//beach stage
+		else if(i == 3) {
+			for(int x = 0; x < 14; x ++) {
+				for(int y = 0; y < 7; y ++) {
+					b[x][y] = new Tile(x, y, "sand");
+				}
+			}
+			
+			for(int x = 8; x < 14; x ++) {
+				for(int y = 0; y < 7; y ++) {
+					b[x][y] = new Tile(x, y, "grass");
+				}
+			}
+			b[6][0] = new Tile(6,0, "grass");
+			b[7][0] = new Tile(7,0, "grass");
+			b[7][1] = new Tile(7,1, "grass");
+			b[7][5] = new Tile(7,5, "grass");
+		}
+		//airbase stage
+		else if(i == 4) {
+			for(int x = 0; x < 14; x ++) {
+				for(int y = 0; y < 7; y ++) {
+					b[x][y] = new Tile(x, y, "grass");
+				}
+			}
+			for(int x = 0; x < 4; x ++) {
+				for(int y = 0; y < 3; y ++) {
+					b[x][y] = new Tile(x, y, "stone");
+				}
+			}
+			for(int x = 10; x < 14; x ++) {
+				for(int y = 4; y < 7; y ++) {
+					b[x][y] = new Tile(x, y, "stone");
+				}
+			}
+			for(int x = 6; x <= 7; x ++) {
+				for(int y = 0; y < 7; y ++) {
+					b[x][y] = new Tile(x, y, "sand");
+				}
+			}
+			b[4][1] = new Tile(4, 1, "sand");
+			b[5][1] = new Tile(5, 1, "sand");
+			b[8][5] = new Tile(8, 5, "sand");
+			b[9][5] = new Tile(9, 5, "sand");
+		}else if(i == 5) {
+			
 		}
 	}
 	

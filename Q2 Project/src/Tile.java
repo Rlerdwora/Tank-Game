@@ -15,11 +15,11 @@ public class Tile{
 	private AffineTransform tx;
 
 	public Tile(int x, int y, String tileType) {
-		this.x = x;
-		this.y = y;
+		this.x = x * 84;
+		this.y = y * 84 + 1;
 		img = getImage("/imgs/" + tileType + ".png");
 		tx = AffineTransform.getTranslateInstance(x, y );
-		init(x, y);
+		init(this.x, this.y);
 	}
 
 	/* Drawing commands */

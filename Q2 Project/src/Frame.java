@@ -16,13 +16,15 @@ import java.util.ArrayList;
 
 public class Frame extends JPanel implements ActionListener, MouseListener, KeyListener {
 	
-	Background b = new Background();
+	Background b = new Background(4);
 	Tank p1 = new Tank(-5,0,1,"Right");
 	Tank p2 = new Tank(1000,0,2,"Left");
+	ArrayList<Icon> p1Icons = new ArrayList<Icon>();
+	ArrayList<Icon> p2Icons = new ArrayList<Icon>();
 	ArrayList<Shell> p1Shells = new ArrayList<Shell>();
 	ArrayList<Shell> p2Shells = new ArrayList<Shell>();
 	ArrayList<Crate> crates = new ArrayList<Crate>();
-	static ArrayList<CrateParticle> particles = new ArrayList<CrateParticle>();
+	int p1Lives = 3, p2Lives = 3;
 	
 	public void paint(Graphics g) {
 		super.paintComponent(g);
@@ -37,7 +39,14 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		for(Shell x : p1Shells) {
 			x.paint(g);
 		}
-		p1.paint(g);
+		for(int x = 0; x < p1Lives; x ++) {
+			p1Icons.get(x).paint(g);
+		}
+		for(int x = 0; x < p2Lives; x ++) {
+			p2Icons.get(x).paint(g);
+		}
+		
+		p1.paint(g);		
 	}
 	
 	public static void main(String[] arg) {
@@ -46,7 +55,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	
 	public Frame() {
 		JFrame f = new JFrame("Tank Game");
-		f.setSize(new Dimension(1191, 627));
+		f.setSize(new Dimension(1191, 727));
 		f.setBackground(Color.blue);
 		f.add(this);
 		f.setResizable(false);
@@ -57,6 +66,14 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		t.start();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
+		
+		Crate c = new Crate(1,3);
+		crates.add(c);
+		
+		for(int i = 0; i < 3; i ++) {
+			p1Icons.add(new Icon(10 + 100 * i, 600, 1));
+			p2Icons.add(new Icon(885 + 100 * i, 600, 2));
+		}
 	}
 	
 	@Override

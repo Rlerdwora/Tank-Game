@@ -70,6 +70,10 @@ public class Shell{
 		y += yv;
 		x += xv;
 		
+		if(y + 32 > 577) {
+			disappear();
+		}
+		
 		init(x, y);
 	}
 	

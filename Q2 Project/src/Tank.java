@@ -17,8 +17,8 @@ public class Tank{
 	private AffineTransform tx;
 
 	public Tank(int x, int y, int number, String horizontal) {
-		this.x = x;
-		this.y = y;
+		this.x = x * 84;
+		this.y = y * 84 + 1;
 		this.number = number;
 		this.horizontal = horizontal;
 		vertical = "";
@@ -26,6 +26,17 @@ public class Tank{
 		img = getImage("/imgs/tank" + this.number + this.horizontal + vertical + ".png");
 		tx = AffineTransform.getTranslateInstance(x, y );
 		init(x, y);
+	}
+	
+	public void checkCollision(Shell shell) {
+		if(shell.getX() + 55 > x + 5 && shell.getX() + 30 < x + 89
+		&& shell.getY() + 52 > y + 6 && shell.getY() + 32 < y + 90) {
+			shell.disappear();
+		}
+	}
+	
+	public void explode() {
+		
 	}
 
 	public void moveRight() {
