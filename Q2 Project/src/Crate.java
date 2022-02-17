@@ -34,14 +34,15 @@ public class Crate{
 		if(side.equals("H")) {
 			length = 168;
 			height = 84;
-		}else {
+		}
+		if(side.equals("V")) {
 			length = 84;
-			height = 168;
+			height = 84;
 		}
 		exploded = false;
 		img = getImage("/imgs/crateB" + side + ".png");
 		tx = AffineTransform.getTranslateInstance(x, y );
-		init(x, y);
+		init(this.x, this.y);
 	}
 	
 	public void checkCollision(Tank tank) {
@@ -84,9 +85,21 @@ public class Crate{
 		&& shell.getY() + 52 > y && shell.getY() + 32 < y + height
 		&& exploded == false) {
 			shell.disappear();
-			exploded = true;
-			img = getImage("/imgs/crateDebris.png");
-			particles.add(new CrateParticle(x, y));
+			explode();
+		}
+	}
+	
+	public void explode() {
+		for(int i = 0; i < 10; i ++) {
+			particles.add(new CrateParticle(x + length / 2 - 20, y + height / 2 - 20));
+		}
+		exploded = true;
+		if(height == 84 && length == 84) {
+			img = getImage("/imgs/crateADebris.png");
+		}else if(height == 164 && length == 84) {
+			img = getImage("/imgs/crateBVDebris.png");
+		}else {
+			img = getImage("/imgs/crateBHDebris.png");			
 		}
 	}
 	

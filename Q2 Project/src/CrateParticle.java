@@ -18,11 +18,13 @@ public class CrateParticle{
 	public CrateParticle(int x, int y) {
 		this.x = x + (int)(Math.random() * 21) - 10;
 		this.y = y + (int)(Math.random() * 21) - 10;
-		xv = (int)(Math.random() * 5) - 2;
-		yv = (int)(Math.random() * 5) - 2;
-		timer = 40;
+		xv = (int)(Math.random() * 11) - 5;
+		yv = (int)(Math.random() * 11) - 5;
+		timer = 15;
 		
-		
+		img = getImage("/imgs/crateParticle.gif");
+		tx = AffineTransform.getTranslateInstance(x, y );
+		init(this.x, this.y);
 	}
 
 	public void update() {
@@ -31,7 +33,7 @@ public class CrateParticle{
 		
 		timer --;
 		
-
+		init(x,y);
 	}
 	
 	/* Drawing commands */
@@ -49,7 +51,7 @@ public class CrateParticle{
 	
 	private void init(double a, double b) {
 		tx.setToTranslation(a, b);
-		tx.scale(5, 5);
+		tx.scale(1, 1);
 	}
 
 	private Image getImage(String path) {

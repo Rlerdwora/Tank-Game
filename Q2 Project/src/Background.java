@@ -22,7 +22,7 @@ public class Background{
 	
 	public Background(int i) {
 		
-		//grassfield stage
+		//grass field stage
 		if(i == 0) {
 			for(int x = 0; x < 14; x ++) {
 				for(int y = 0; y < 7; y ++) {

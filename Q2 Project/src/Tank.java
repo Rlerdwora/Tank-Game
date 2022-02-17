@@ -11,8 +11,10 @@ import java.awt.color.*;
 public class Tank{
 	
 	//image related variables
-	int x, y, xv, yv, number, xPos = 4, yPos = 6, shellTimer;
-	String horizontal, vertical;
+	private int x, y, xv, yv, number, xPos = 4, yPos = 6, shellTimer; 
+	private double deathTimer, respawnTimer;
+	private String horizontal, vertical, action;
+	private boolean exploded, control, invincible;
 	private Image img; 	
 	private AffineTransform tx;
 
@@ -21,9 +23,14 @@ public class Tank{
 		this.y = y * 84 + 1;
 		this.number = number;
 		this.horizontal = horizontal;
+		control = true;
+		exploded = false;
+		deathTimer = 0;
+		respawnTimer = 300;
 		vertical = "";
+		action = "Respawn";
 		
-		img = getImage("/imgs/tank" + this.number + this.horizontal + vertical + ".png");
+		img = getImage("/imgs/tank" + this.number + action + this.horizontal + vertical + ".png");
 		tx = AffineTransform.getTranslateInstance(x, y );
 		init(x, y);
 	}
@@ -32,42 +39,68 @@ public class Tank{
 		if(shell.getX() + 55 > x + 5 && shell.getX() + 30 < x + 89
 		&& shell.getY() + 52 > y + 6 && shell.getY() + 32 < y + 90) {
 			shell.disappear();
+			explode();
 		}
 	}
 	
 	public void explode() {
+		exploded = true;
+		deathTimer = 40;
 		
+		vertical = "Respawn";
+		if(number == 1) {
+			horizontal = "Right";
+		}else {
+			horizontal = "Left";
+		}
+	}
+	
+	public void respawn() {
+		vertical = "";
+		if(number == 1) {
+			horizontal = "Right";
+		}else {
+			horizontal = "Left";
+		}
 	}
 
 	public void moveRight() {
-		if(yv == 0) {
-			xv = 4;
-		}else {
-			xv = 3;
+		if(control == true) {
+			if(yv == 0) {
+				xv = 4;
+			}else {
+				xv = 3;
+			}
 		}
 	}
 	
 	public void moveLeft() {
-		if(yv == 0) {
-			xv = -4;
-		}else {
-			xv = -3;
+		if(control == true) {
+			if(yv == 0) {
+				xv = -4;
+			}else {
+				xv = -3;
+			}
 		}
 	}
 	
 	public void moveUp() {
-		if(xv == 0) {
-			yv = -4;
-		}else {
-			yv = -3;
+		if(control == true) {
+			if(xv == 0) {
+				yv = -4;
+			}else {
+				yv = -3;
+			}
 		}
 	}
 	
 	public void moveDown() {
-		if(xv == 0) {
-			yv = 4;
-		}else {
-			yv = 3;
+		if(control == true) {
+			if(xv == 0) {
+				yv = 4;
+			}else {
+				yv = 3;
+			}
 		}
 	}
 	
@@ -119,6 +152,10 @@ public class Tank{
 		return shellTimer;
 	}
 	
+	public boolean getControl() {
+		return control;
+	}
+	
 	public void setX(int x) {
 		this.x = x;
 	}
@@ -146,65 +183,83 @@ public class Tank{
 			y = 500;
 		}
 		
-		if(yv == 0 && xv < 0) {
-			horizontal = "Left";
-			vertical = "";
-			xPos = 4;
-			yPos = 6;
-			xv = -4;
-		}else if(yv == 0 && xv > 0) {
-			horizontal = "Right";
-			vertical = "";
-			xPos = 6;
-			yPos = 6;
-			xv = 4;
-		}else if(yv < 0 && xv == 0) {
-			horizontal = "";
-			vertical = "Up";
-			xPos = 7;
-			yPos = 5;
-			yv = -4;
-		}else if(yv > 0 && xv == 0) {
-			horizontal = "";
-			vertical = "Down";
-			xPos = 5;
-			yPos = 6;
-			yv = 4;
-		}else if(yv < 0 && xv < 0) {
-			horizontal = "Left";
-			vertical = "Up";
-			xPos = -13;
-			yPos = -13;
-			yv = -3;
-			xv = -3;
-		}else if(yv < 0 && xv > 0) {
-			horizontal = "Right";
-			vertical = "Up";
-			xPos = -9;
-			yPos = -13;
-			yv = -3;
-			xv = 3;
-		}else if(yv > 0 && xv < 0) {
-			horizontal = "Left";
-			vertical = "Down";
-			xPos = -14;
-			yPos = -10;
-			yv = 3;
-			xv = -3;
-		}else if(yv > 0 && xv > 0) {
-			horizontal = "Right";
-			vertical = "Down";
-			xPos = -10;
-			yPos = -10;
-			yv = 3;
-			xv = 3;
+		if(respawnTimer <= 0) {
+			action = "";
+			
+			if(yv == 0 && xv < 0) {
+				horizontal = "Left";
+				vertical = "";
+				xPos = 4;
+				yPos = 6;
+				xv = -4;
+			}else if(yv == 0 && xv > 0) {
+				horizontal = "Right";
+				vertical = "";
+				xPos = 6;
+				yPos = 6;
+				xv = 4;
+			}else if(yv < 0 && xv == 0) {
+				horizontal = "";
+				vertical = "Up";
+				xPos = 7;
+				yPos = 5;
+				yv = -4;
+			}else if(yv > 0 && xv == 0) {
+				horizontal = "";
+				vertical = "Down";
+				xPos = 5;
+				yPos = 6;
+				yv = 4;
+			}else if(yv < 0 && xv < 0) {
+				horizontal = "Left";
+				vertical = "Up";
+				xPos = -13;
+				yPos = -13;
+				yv = -3;
+				xv = -3;
+			}else if(yv < 0 && xv > 0) {
+				horizontal = "Right";
+				vertical = "Up";
+				xPos = -9;
+				yPos = -13;
+				yv = -3;
+				xv = 3;
+			}else if(yv > 0 && xv < 0) {
+				horizontal = "Left";
+				vertical = "Down";
+				xPos = -14;
+				yPos = -10;
+				yv = 3;
+				xv = -3;
+			}else if(yv > 0 && xv > 0) {
+				horizontal = "Right";
+				vertical = "Down";
+				xPos = -10;
+				yPos = -10;
+				yv = 3;
+				xv = 3;
+			}
 		}
 		
 		if(shellTimer > 0) {
-			shellTimer -= 2;
+			shellTimer --;
 		}
 		
-		img = getImage("/imgs/tank" + this.number + this.horizontal + vertical + ".png");
+		if(deathTimer > 0) {
+			deathTimer --;
+			control = false;
+		}
+		
+		if(respawnTimer > 0) {
+			control = false;
+			respawnTimer -= 10;
+		}else {
+			if(exploded == false && deathTimer <= 0) {
+				control = true;
+			}
+		}
+		
+		img = getImage("/imgs/tank" + number + action + horizontal + vertical + ".png");
 		init(x + xPos, y + yPos);
 	}
 	
@@ -216,15 +271,23 @@ public class Tank{
 		//call update to update the actualy picture location
 		update();
 		
-		g2.drawImage(img, tx, null);
-		g.fillRect(x + 8, y, shellTimer, 10);
-		g.drawRect(x + 5, y + 6, 84, 84);
+		if(deathTimer <= 40 && deathTimer > 30 && deathTimer % 4 == 0) {
+			
+		}else if(deathTimer <= 30 && deathTimer > 20 && deathTimer % 3 == 0) {
+			
+		}else if(deathTimer <= 20 && deathTimer > 0 && deathTimer % 2 == 0) {
+			
+		}else {
+			g2.drawImage(img, tx, null);
+			g.fillRect(x + 8, y, shellTimer, 10);
+			g.drawRect(x + 5, y + 6, 84, 84);
+		}
 	}
 
 	
 	private void init(double a, double b) {
 		tx.setToTranslation(a, b);
-		tx.scale(.75, .75);
+		tx.scale(.75 + respawnTimer / 100, .75 + respawnTimer / 100);
 	}
 
 	private Image getImage(String path) {

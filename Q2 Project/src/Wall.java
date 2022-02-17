@@ -15,8 +15,8 @@ public class Wall{
 	private AffineTransform tx;
 
 	public Wall(int x, int y, String side) {
-		this.x = x;
-		this.y = y;
+		this.x = x * 84;
+		this.y = y * 84 + 1;
 		img = getImage("/imgs/wall" + side + ".png");
 		tx = AffineTransform.getTranslateInstance(x, y );
 		init(x, y);
@@ -51,6 +51,13 @@ public class Wall{
 			}else if(tank.getX() + 5 < x + 84 && tank.getX() > x) {
 				tank.setX(tank.getX() - 4);
 			}
+		}
+	}
+	
+	public void checkCollision(Shell shell) {
+		if(shell.getX() + 55 > x && shell.getX() + 30 < x + 84
+		&& shell.getY() + 52 > y && shell.getY() + 32 < y + 84) {
+			shell.disappear();
 		}
 	}
 	

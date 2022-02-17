@@ -19,12 +19,13 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	Background b = new Background(4);
 	Tank p1 = new Tank(-5,0,1,"Right");
 	Tank p2 = new Tank(1000,0,2,"Left");
+	ArrayList<Background> backgrounds = new ArrayList<Background>();
 	ArrayList<Icon> p1Icons = new ArrayList<Icon>();
 	ArrayList<Icon> p2Icons = new ArrayList<Icon>();
 	ArrayList<Shell> p1Shells = new ArrayList<Shell>();
 	ArrayList<Shell> p2Shells = new ArrayList<Shell>();
 	ArrayList<Crate> crates = new ArrayList<Crate>();
-	int p1Lives = 3, p2Lives = 3;
+	ArrayList<Wall> walls = new ArrayList<Wall>();
 	
 	public void paint(Graphics g) {
 		super.paintComponent(g);
@@ -32,6 +33,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		for(Crate x : crates) {
 			x.paint(g);
 			x.checkCollision(p1);
+			x.checkCollision(p2);
 			for(Shell y : p1Shells) {
 				x.checkCollision(y);
 			}
@@ -39,11 +41,11 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		for(Shell x : p1Shells) {
 			x.paint(g);
 		}
-		for(int x = 0; x < p1Lives; x ++) {
-			p1Icons.get(x).paint(g);
+		for(Icon x : p1Icons) {
+			x.paint(g);
 		}
-		for(int x = 0; x < p2Lives; x ++) {
-			p2Icons.get(x).paint(g);
+		for(Icon x : p2Icons) {
+			x.paint(g);
 		}
 		
 		p1.paint(g);		
@@ -67,12 +69,19 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
 		
-		Crate c = new Crate(1,3);
-		crates.add(c);
-		
 		for(int i = 0; i < 3; i ++) {
-			p1Icons.add(new Icon(10 + 100 * i, 600, 1));
-			p2Icons.add(new Icon(885 + 100 * i, 600, 2));
+			p1Icons.add(i, new Icon(10 + 100 * i, 600, 1));
+			p2Icons.add(i, new Icon(1085 + -100 * i, 600, 2));
+		}
+		
+		crates.add(new Crate(4,5,"H"));
+	}
+	
+	public void subtractLife(int x) {
+		if(x == 1) {
+			p1Icons.remove(p1Icons.size() - 1);
+		}else {
+			p2Icons.remove(p2Icons.size() - 1);
 		}
 	}
 	
@@ -129,7 +138,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			p1.moveRight();
 		}
 		
-		if(arg0.getKeyCode() == 70 && p1.getTimer() == 0) {
+		if(arg0.getKeyCode() == 70 && p1.getTimer() == 0 && p1.getControl() == true) {
 			p1.fire();
 			Shell s = new Shell(p1.getX(), p1.getY(), p1.getH(), p1.getV());
 			p1Shells.add(s);
