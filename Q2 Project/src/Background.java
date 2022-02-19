@@ -11,14 +11,6 @@ public class Background{
 	
 	//image related variables
 	private Tile[][] b = new Tile[14][7];
-
-	public Background() {
-		for(int x = 0; x < 14; x ++) {
-			for(int y = 0; y < 7; y ++) {
-				b[x][y] = new Tile(x, y, "grass");
-			}
-		}
-	}
 	
 	public Background(int i) {
 		

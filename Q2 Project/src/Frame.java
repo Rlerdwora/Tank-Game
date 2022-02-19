@@ -17,28 +17,49 @@ import java.util.ArrayList;
 public class Frame extends JPanel implements ActionListener, MouseListener, KeyListener {
 	
 	Background b = new Background(4);
-	Tank p1 = new Tank(-5,0,1,"Right");
-	Tank p2 = new Tank(1000,0,2,"Left");
+	Tank p1 = new Tank(0,0,1,"Right");
+	Tank p2 = new Tank(14,7,2,"Left");
 	ArrayList<Background> backgrounds = new ArrayList<Background>();
 	ArrayList<Icon> p1Icons = new ArrayList<Icon>();
 	ArrayList<Icon> p2Icons = new ArrayList<Icon>();
 	ArrayList<Shell> p1Shells = new ArrayList<Shell>();
 	ArrayList<Shell> p2Shells = new ArrayList<Shell>();
-	ArrayList<Crate> crates = new ArrayList<Crate>();
-	ArrayList<Wall> walls = new ArrayList<Wall>();
+	ArrayList<ArrayList<Crate>> crates = new ArrayList<ArrayList<Crate>>();
+	ArrayList<ArrayList<Wall>> walls = new ArrayList<ArrayList<Wall>>();	
+	int stageSelect = 4;
+	boolean gameStart = true;
 	
 	public void paint(Graphics g) {
 		super.paintComponent(g);
 		b.paint(g);
-		for(Crate x : crates) {
+		
+		for(Crate x : crates.get(stageSelect - 1)) {
 			x.paint(g);
 			x.checkCollision(p1);
 			x.checkCollision(p2);
 			for(Shell y : p1Shells) {
 				x.checkCollision(y);
 			}
+			for(Shell y : p2Shells) {
+				x.checkCollision(y);
+			}
 		}
+		for(Wall x : walls.get(stageSelect - 1)) {
+			x.paint(g);
+			x.checkCollision(p1);
+			x.checkCollision(p2);
+			for(Shell y : p1Shells) {
+				x.checkCollision(y);
+			}
+			for(Shell y : p2Shells) {
+				x.checkCollision(y);
+			}
+		}
+		
 		for(Shell x : p1Shells) {
+			x.paint(g);
+		}
+		for(Shell x : p2Shells) {
 			x.paint(g);
 		}
 		for(Icon x : p1Icons) {
@@ -48,7 +69,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			x.paint(g);
 		}
 		
-		p1.paint(g);		
+		p1.paint(g);
+		p2.paint(g);
 	}
 	
 	public static void main(String[] arg) {
@@ -74,7 +96,26 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			p2Icons.add(i, new Icon(1085 + -100 * i, 600, 2));
 		}
 		
-		crates.add(new Crate(4,5,"H"));
+		for(int i = 1; i <= 4; i++) {
+			Background background = new Background(i);
+			backgrounds.add(background);
+		}
+		
+		for(int i = 0; i < 4; i ++) {
+			walls.add(new ArrayList<Wall>());
+			crates.add(new ArrayList<Crate>());
+		}
+		
+		
+		//airbase stage obstacles
+		crates.get(3).add(new Crate(5, 3));
+		crates.get(3).add(new Crate(6, 3));
+
+		
+		for(int i = 0; i < 4; i ++) {
+			walls.get(3).add(new Wall(i,2, "H"));
+			walls.get(3).add(new Wall(i+ 10,4, "H"));
+		}
 	}
 	
 	public void subtractLife(int x) {
@@ -82,6 +123,22 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			p1Icons.remove(p1Icons.size() - 1);
 		}else {
 			p2Icons.remove(p2Icons.size() - 1);
+		}
+	}
+	
+	public void stageUp() {
+		if(stageSelect < 4) {
+			stageSelect ++;
+		}else {
+			stageSelect = 1;
+		}
+	}
+	
+	public void stageDown() {
+		if(stageSelect >= 1) {
+			stageSelect --;
+		}else {
+			stageSelect = 4;
 		}
 	}
 	
@@ -122,26 +179,50 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		// TODO Auto-generated method stub
 		System.out.println(arg0.getKeyCode());
 		
-		if(arg0.getKeyCode() == 87) {
-			p1.moveUp();
-		}
-		
-		if(arg0.getKeyCode() == 65) {
-			p1.moveLeft();
-		}
-		
-		if(arg0.getKeyCode() == 83) {
-			p1.moveDown();
-		}
-		
-		if(arg0.getKeyCode() == 68) {
-			p1.moveRight();
-		}
-		
-		if(arg0.getKeyCode() == 70 && p1.getTimer() == 0 && p1.getControl() == true) {
-			p1.fire();
-			Shell s = new Shell(p1.getX(), p1.getY(), p1.getH(), p1.getV());
-			p1Shells.add(s);
+		if(gameStart == true) {
+			if(arg0.getKeyCode() == 87) {
+				p1.moveUp();
+			}
+			
+			if(arg0.getKeyCode() == 65) {
+				p1.moveLeft();
+			}
+			
+			if(arg0.getKeyCode() == 83) {
+				p1.moveDown();
+			}
+			
+			if(arg0.getKeyCode() == 68) {
+				p1.moveRight();
+			}
+			
+			if(arg0.getKeyCode() == 70 && p1.getTimer() == 0 && p1.getControl() == true) {
+				p1.fire();
+				Shell s = new Shell(p1.getX(), p1.getY(), p1.getH(), p1.getV());
+				p1Shells.add(s);
+			}
+			
+			if(arg0.getKeyCode() == 37) {
+				p2.moveLeft();
+			}
+			
+			if(arg0.getKeyCode() == 38) {
+				p2.moveUp();
+			}
+			
+			if(arg0.getKeyCode() == 39) {
+				p2.moveRight();
+			}
+			
+			if(arg0.getKeyCode() == 40) {
+				p2.moveDown();
+			}
+			
+			if(arg0.getKeyCode() == 46 && p2.getTimer() == 0 && p2.getControl() == true) {
+				p2.fire();
+				Shell s = new Shell(p2.getX(), p2.getY(), p2.getH(), p2.getV());
+				p2Shells.add(s);
+			}
 		}
 	}
 
@@ -162,6 +243,22 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		
 		if(arg0.getKeyCode() == 68) {
 			p1.stopMoveRight();
+		}
+		
+		if(arg0.getKeyCode() == 37) {
+			p2.stopMoveLeft();
+		}
+		
+		if(arg0.getKeyCode() == 38) {
+			p2.stopMoveUp();
+		}
+		
+		if(arg0.getKeyCode() == 39) {
+			p2.stopMoveRight();
+		}
+		
+		if(arg0.getKeyCode() == 40) {
+			p2.stopMoveDown();
 		}
 	}
 

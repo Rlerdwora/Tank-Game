@@ -19,14 +19,14 @@ public class Tank{
 	private AffineTransform tx;
 
 	public Tank(int x, int y, int number, String horizontal) {
-		this.x = x * 84;
-		this.y = y * 84 + 1;
+		this.x = x * 84 - 5;
+		this.y = y * 84 - 5;
 		this.number = number;
 		this.horizontal = horizontal;
 		control = true;
 		exploded = false;
 		deathTimer = 0;
-		respawnTimer = 300;
+		respawnTimer = 0;
 		vertical = "";
 		action = "Respawn";
 		
@@ -138,6 +138,14 @@ public class Tank{
 	
 	public int getY() {
 		return y;
+	}
+	
+	public int getXV() {
+		return xv;
+	}
+	
+	public int getYV() {
+		return yv;
 	}
 	
 	public String getH() {

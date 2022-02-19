@@ -19,44 +19,16 @@ public class Wall{
 		this.y = y * 84 + 1;
 		img = getImage("/imgs/wall" + side + ".png");
 		tx = AffineTransform.getTranslateInstance(x, y );
-		init(x, y);
+		init(this.x , this.y);
 	}
 	
 	public void checkCollision(Tank tank) {
-		//tank is to the left of crate
-		if(tank.getX() + 89 > x && tank.getX() < x && tank.getY() + 88 > y && tank.getY() + 6 < y + 84) {
-			tank.setX(tank.getX() - 4);
-		}
 		
-		//tank is to the right of crate
-		if(tank.getX() + 5 < x + 84 && tank.getX() > x && tank.getY() + 88 > y && tank.getY() + 6 < y + 84) {
-			tank.setX(tank.getX() + 4);
-		}
-		
-		//tank is above crate
-		if(tank.getX() + 89 > x && tank.getX() + 6 < x + 84 && tank.getY() + 88 > y && tank.getY() + 80 < y) {
-			tank.setY(tank.getY() - 4);
-			if(tank.getX() + 89 > x && tank.getX() < x) {
-				tank.setX(tank.getX() + 4);
-			}else if(tank.getX() + 5 < x + 84 && tank.getX() > x) {
-				tank.setX(tank.getX() - 4);
-			}
-		}
-		
-		//tank is below crate
-		if(tank.getX() + 89 > x && tank.getX() + 6 < x + 84 && tank.getY() + 6 > y && tank.getY() + 6 < y + 84) {
-			tank.setY(tank.getY() + 4);
-			if(tank.getX() + 89 > x && tank.getX() < x) {
-				tank.setX(tank.getX() + 4);
-			}else if(tank.getX() + 5 < x + 84 && tank.getX() > x) {
-				tank.setX(tank.getX() - 4);
-			}
-		}
 	}
 	
 	public void checkCollision(Shell shell) {
-		if(shell.getX() + 55 > x && shell.getX() + 30 < x + 84
-		&& shell.getY() + 52 > y && shell.getY() + 32 < y + 84) {
+		if(shell.getX() + 44 > x && shell.getX() + 30 < x + 84
+		&& shell.getY() + 42 > y && shell.getY() + 32 < y + 84) {
 			shell.disappear();
 		}
 	}

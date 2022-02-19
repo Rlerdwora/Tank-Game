@@ -37,7 +37,7 @@ public class Crate{
 		}
 		if(side.equals("V")) {
 			length = 84;
-			height = 84;
+			height = 168;
 		}
 		exploded = false;
 		img = getImage("/imgs/crateB" + side + ".png");
@@ -48,35 +48,67 @@ public class Crate{
 	public void checkCollision(Tank tank) {
 		if(exploded == false) {
 			//tank is to the left of crate
-			if(tank.getX() + 89 > x && tank.getX() < x && tank.getY() + 88 > y && tank.getY() + 6 < y + height) {
-				tank.setX(tank.getX() - 4);
+			if(tank.getX() + 89 > x && tank.getX() + 89 < x + length && tank.getY() + 90 > y && tank.getY() + 6 < y + height) {
+				if(tank.getXV() == 4) {
+					tank.setX(tank.getX() - 4);
+				}else if(tank.getXV() == 3) {
+					tank.setX(tank.getX() - 3);
+				}
 			}
 			
 			//tank is to the right of crate
-			if(tank.getX() + 5 < x + length && tank.getX() > x && tank.getY() + 88 > y && tank.getY() + 6 < y + height) {
-				tank.setX(tank.getX() + 4);
+			if(tank.getX() + 5 < x + length && tank.getX() + 5 > x && tank.getY() + 90 > y && tank.getY() + 6 < y + height) {
+				if(tank.getXV() == -4) {
+					tank.setX(tank.getX() + 4);
+				}else if(tank.getXV() == -3) {
+					tank.setX(tank.getX() + 3);
+				}
 			}
 			
 			//tank is above crate
-			if(tank.getX() + 89 > x && tank.getX() + 6 < x + length && tank.getY() + 88 > y && tank.getY() + 80 < y) {
-				tank.setY(tank.getY() - 4);
-				if(tank.getX() + 89 > x && tank.getX() < x) {
-					tank.setX(tank.getX() + 4);
-				}else if(tank.getX() + 5 < x + length && tank.getX() > x) {
-					tank.setX(tank.getX() - 4);
+			if(tank.getX() + 89 > x && tank.getX() + 6 < x + length && tank.getY() + 90 > y && tank.getY() + 86 <= y && tank.getY() + 90 < y + height) {
+				if(tank.getYV() == 4) {
+					tank.setY(tank.getY() - 4);
+				}else if(tank.getYV() == 3) {
+					tank.setY(tank.getY() - 3);
+				}
+				if(tank.getX() + 89 > x && tank.getX() + 89 < x + length) {
+					if(tank.getXV() == 4) {
+						tank.setX(tank.getX() + 4);
+					}else if(tank.getXV() == 3) {
+						tank.setX(tank.getX() + 3);
+					}
+				}else if(tank.getX() + 5 < x + length && tank.getX() + 5 > x) {
+					if(tank.getXV() == -4) {
+						tank.setX(tank.getX() - 4);
+					}else if(tank.getXV() == -3) {
+						tank.setX(tank.getX() - 3);
+					}
 				}
 			}
 			
 			//tank is below crate
-			if(tank.getX() + 89 > x && tank.getX() + 6 < x + length && tank.getY() + 6 > y && tank.getY() + 6 < y + height) {
-				tank.setY(tank.getY() + 4);
-				if(tank.getX() + 89 > x && tank.getX() < x) {
-					tank.setX(tank.getX() + 4);
-				}else if(tank.getX() + 5 < x + length && tank.getX() > x) {
-					tank.setX(tank.getX() - 4);
+			if(tank.getX() + 89 > x && tank.getX() + 6 < x + length && tank.getY() + 6 < y + height && tank.getY() + 10 >= y + height && tank.getY() + 6 > y) {
+				if(tank.getYV() == -4) {
+					tank.setY(tank.getY() + 4);
+				}else if(tank.getYV() == -3) {
+					tank.setY(tank.getY() + 3);
+				}
+				if(tank.getX() + 89 > x && tank.getX() + 89 < x + length) {
+					if(tank.getXV() == 4) {
+						tank.setX(tank.getX() + 4);
+					}else if(tank.getXV() == 3) {
+						tank.setX(tank.getX() + 3);
+					}
+				}else if(tank.getX() + 5 < x + length && tank.getX() + 5 > x) {
+					if(tank.getXV() == -4) {
+						tank.setX(tank.getX() - 4);
+					}else if(tank.getXV() == -3) {
+						tank.setX(tank.getX() - 3);
+					}
 				}
 			}
-
+			
 		}
 	}
 	
@@ -96,7 +128,7 @@ public class Crate{
 		exploded = true;
 		if(height == 84 && length == 84) {
 			img = getImage("/imgs/crateADebris.png");
-		}else if(height == 164 && length == 84) {
+		}else if(height == 168 && length == 84) {
 			img = getImage("/imgs/crateBVDebris.png");
 		}else {
 			img = getImage("/imgs/crateBHDebris.png");			
