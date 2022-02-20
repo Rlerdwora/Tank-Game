@@ -11,7 +11,7 @@ import java.awt.color.*;
 public class Tank{
 	
 	//image related variables
-	private int x, y, xv, yv, number, xPos = 4, yPos = 6, shellTimer; 
+	private int x, y, xv, yv, number, xPos = 4, yPos = 6, shellTimer, startPosX, startPosY, invinTimer; 
 	private double deathTimer, respawnTimer;
 	private String horizontal, vertical, action;
 	private boolean exploded, control, invincible;
@@ -21,12 +21,15 @@ public class Tank{
 	public Tank(int x, int y, int number, String horizontal) {
 		this.x = x * 84 - 5;
 		this.y = y * 84 - 5;
+		startPosX = x * 84 - 5;
+		startPosY = y * 84 - 5;
 		this.number = number;
 		this.horizontal = horizontal;
 		control = true;
+		invincible = false;
 		exploded = false;
 		deathTimer = 0;
-		respawnTimer = 0;
+		respawnTimer = 300;
 		vertical = "";
 		action = "Respawn";
 		
@@ -44,19 +47,28 @@ public class Tank{
 	}
 	
 	public void explode() {
-		exploded = true;
-		deathTimer = 40;
-		
-		vertical = "Respawn";
-		if(number == 1) {
-			horizontal = "Right";
-		}else {
-			horizontal = "Left";
+		if(invincible == false) {
+			Frame.subtractLife(number);
+			exploded = true;
+			deathTimer = 40;
+			shellTimer = 0;
+			action = "Debris";
+			horizontal = "";
+			vertical = "";
+			x += 3;
+			y += 3;
+			xv = 0;
+			yv = 0;
 		}
 	}
 	
 	public void respawn() {
+		exploded = false;
+		respawnTimer = 300;
+		x = startPosX;
+		y = startPosY;
 		vertical = "";
+		action = "Respawn";
 		if(number == 1) {
 			horizontal = "Right";
 		}else {
@@ -191,7 +203,7 @@ public class Tank{
 			y = 500;
 		}
 		
-		if(respawnTimer <= 0) {
+		if(respawnTimer <= 0 && exploded == false && deathTimer <= 0) {
 			action = "";
 			
 			if(yv == 0 && xv < 0) {
@@ -256,6 +268,9 @@ public class Tank{
 		if(deathTimer > 0) {
 			deathTimer --;
 			control = false;
+			if(deathTimer == 1) {
+				respawn();
+			}
 		}
 		
 		if(respawnTimer > 0) {
@@ -264,6 +279,18 @@ public class Tank{
 		}else {
 			if(exploded == false && deathTimer <= 0) {
 				control = true;
+			}
+		}
+		
+		if(respawnTimer <= 0 && exploded == false && deathTimer <= 0) {
+			control = true;
+		}
+		
+		if(invinTimer > 0) {
+			invinTimer --;
+			invincible = true;
+			if(invinTimer == 1) {
+				invincible = false;
 			}
 		}
 		
@@ -278,18 +305,15 @@ public class Tank{
 		
 		//call update to update the actualy picture location
 		update();
-		
-		if(deathTimer <= 40 && deathTimer > 30 && deathTimer % 4 == 0) {
-			
-		}else if(deathTimer <= 30 && deathTimer > 20 && deathTimer % 3 == 0) {
-			
-		}else if(deathTimer <= 20 && deathTimer > 0 && deathTimer % 2 == 0) {
-			
+	
+		if((exploded == true && deathTimer <= 20 && deathTimer > 0 && deathTimer % 2 == 0)
+		|| (invincible == true && invinTimer % 3 == 0)) {
+				
 		}else {
 			g2.drawImage(img, tx, null);
 			g.fillRect(x + 8, y, shellTimer, 10);
 			g.drawRect(x + 5, y + 6, 84, 84);
-		}
+		}		
 	}
 
 	

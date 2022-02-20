@@ -50,12 +50,6 @@ public class Shell{
 									//use your variables
 	}
 	
-	public void checkCollision(Tank tank) {
-		if(tank.getX() + 89 > x + 30 && tank.getX() + 5 < x + 55 && tank.getY() + 6 > y + 52 && tank.getY() + 90 < y + 32) {
-			disappear();
-		}
-	}
-	
 	public int getX() {
 		return x;
 	}

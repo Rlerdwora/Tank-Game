@@ -17,11 +17,11 @@ import java.util.ArrayList;
 public class Frame extends JPanel implements ActionListener, MouseListener, KeyListener {
 	
 	Background b = new Background(4);
-	Tank p1 = new Tank(0,0,1,"Right");
-	Tank p2 = new Tank(14,7,2,"Left");
+	Tank p1 = new Tank(5,5,1,"Right");
+	Tank p2 = new Tank(6,6,2,"Left");
 	ArrayList<Background> backgrounds = new ArrayList<Background>();
-	ArrayList<Icon> p1Icons = new ArrayList<Icon>();
-	ArrayList<Icon> p2Icons = new ArrayList<Icon>();
+	static ArrayList<Icon> p1Icons = new ArrayList<Icon>();
+	static ArrayList<Icon> p2Icons = new ArrayList<Icon>();
 	ArrayList<Shell> p1Shells = new ArrayList<Shell>();
 	ArrayList<Shell> p2Shells = new ArrayList<Shell>();
 	ArrayList<ArrayList<Crate>> crates = new ArrayList<ArrayList<Crate>>();
@@ -58,9 +58,11 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		
 		for(Shell x : p1Shells) {
 			x.paint(g);
+			p2.checkCollision(x);
 		}
 		for(Shell x : p2Shells) {
 			x.paint(g);
+			p1.checkCollision(x);
 		}
 		for(Icon x : p1Icons) {
 			x.paint(g);
@@ -71,6 +73,14 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		
 		p1.paint(g);
 		p2.paint(g);
+		
+		if(p1Icons.size() == 0) {
+			
+		}else if(p2Icons.size() == 0) {
+			
+		}else {
+			
+		}
 	}
 	
 	public static void main(String[] arg) {
@@ -120,7 +130,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		}
 	}
 	
-	public void subtractLife(int x) {
+	public static void subtractLife(int x) {
 		if(x == 1) {
 			p1Icons.remove(p1Icons.size() - 1);
 		}else {
