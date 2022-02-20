@@ -108,9 +108,11 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		
 		
 		//airbase stage obstacles
-		crates.get(3).add(new Crate(5, 3));
-		crates.get(3).add(new Crate(6, 3));
-
+		crates.get(3).add(new Crate(3, 0, "V"));
+		crates.get(3).add(new Crate(10, 5, "V"));
+		crates.get(3).add(new Crate(2, 4, "V"));
+		crates.get(3).add(new Crate(5, 4));
+		crates.get(3).add(new Crate(8, 3));
 		
 		for(int i = 0; i < 4; i ++) {
 			walls.get(3).add(new Wall(i,2, "H"));
