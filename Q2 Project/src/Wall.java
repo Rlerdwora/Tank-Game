@@ -41,7 +41,7 @@ public class Wall{
 		}
 		
 		//tank is above crate
-		if(tank.getX() + 89 > x && tank.getX() + 6 < x + 84 && tank.getY() + 90 > y && tank.getY() + 86 <= y && tank.getY() + 90 < y + 84) {
+		if(tank.getX() + 89 > x && tank.getX() + 6 < x + 84 && tank.getY() + 90 > y && tank.getY() + 86 <= y && tank.getY() + 90 < y + 84 && tank.getX() + 85 > x && tank.getX() + 10 < x + 84) {
 			if(tank.getYV() == 4) {
 				tank.setY(tank.getY() - 4);
 			}else if(tank.getYV() == 3) {
@@ -50,7 +50,7 @@ public class Wall{
 		}
 		
 		//tank is below crate
-		if(tank.getX() + 89 > x && tank.getX() + 6 < x + 84 && tank.getY() + 6 < y + 84 && tank.getY() + 10 >= y + 84 && tank.getY() + 6 > y) {
+		if(tank.getX() + 89 > x && tank.getX() + 6 < x + 84 && tank.getY() + 6 < y + 84 && tank.getY() + 10 >= y + 84 && tank.getY() + 6 > y && tank.getX() + 85 > x && tank.getX() + 10 < x + 84) {
 			if(tank.getYV() == -4) {
 				tank.setY(tank.getY() + 4);
 			}else if(tank.getYV() == -3) {
@@ -72,7 +72,7 @@ public class Wall{
 		Graphics2D g2 = (Graphics2D) g;
 		
 		g2.drawImage(img, tx, null);
-		g.drawRect(x, y, 84, 84);
+		//g.drawRect(x, y, 84, 84);
 	}
 
 	

@@ -276,6 +276,10 @@ public class Tank{
 		if(respawnTimer > 0) {
 			control = false;
 			respawnTimer -= 10;
+			if(respawnTimer == 0) {
+				invinTimer = 40;
+				respawnTimer --;
+			}
 		}else {
 			if(exploded == false && deathTimer <= 0) {
 				control = true;
@@ -289,9 +293,8 @@ public class Tank{
 		if(invinTimer > 0) {
 			invinTimer --;
 			invincible = true;
-			if(invinTimer == 1) {
-				invincible = false;
-			}
+		}else {
+			invincible = false;
 		}
 		
 		img = getImage("/imgs/tank" + number + action + horizontal + vertical + ".png");
@@ -307,12 +310,12 @@ public class Tank{
 		update();
 	
 		if((exploded == true && deathTimer <= 20 && deathTimer > 0 && deathTimer % 2 == 0)
-		|| (invincible == true && invinTimer % 3 == 0)) {
+		|| (invincible == true && invinTimer % 4 == 0)) {
 				
 		}else {
 			g2.drawImage(img, tx, null);
 			g.fillRect(x + 8, y, shellTimer, 10);
-			g.drawRect(x + 5, y + 6, 84, 84);
+			//g.drawRect(x + 5, y + 6, 84, 84);
 		}		
 	}
 

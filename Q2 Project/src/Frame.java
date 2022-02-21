@@ -16,9 +16,8 @@ import java.util.ArrayList;
 
 public class Frame extends JPanel implements ActionListener, MouseListener, KeyListener {
 	
-	Background b = new Background(4);
-	Tank p1 = new Tank(5,5,1,"Right");
-	Tank p2 = new Tank(6,6,2,"Left");
+	Tank p1 = new Tank(0,0,1,"Right");
+	Tank p2 = new Tank(14,7,2,"Left");
 	ArrayList<Background> backgrounds = new ArrayList<Background>();
 	static ArrayList<Icon> p1Icons = new ArrayList<Icon>();
 	static ArrayList<Icon> p2Icons = new ArrayList<Icon>();
@@ -26,12 +25,12 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	ArrayList<Shell> p2Shells = new ArrayList<Shell>();
 	ArrayList<ArrayList<Crate>> crates = new ArrayList<ArrayList<Crate>>();
 	ArrayList<ArrayList<Wall>> walls = new ArrayList<ArrayList<Wall>>();	
-	int stageSelect = 4;
+	int stageSelect = 1;
 	boolean gameStart = true;
 	
 	public void paint(Graphics g) {
 		super.paintComponent(g);
-		b.paint(g);
+		backgrounds.get(stageSelect - 1).paint(g);
 		
 		for(Crate x : crates.get(stageSelect - 1)) {
 			x.paint(g);
@@ -71,8 +70,10 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			x.paint(g);
 		}
 		
-		p1.paint(g);
-		p2.paint(g);
+		if(gameStart == true) {
+			p1.paint(g);
+			p2.paint(g);
+		}
 		
 		if(p1Icons.size() == 0) {
 			
@@ -106,7 +107,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			p2Icons.add(i, new Icon(1085 + -100 * i, 600, 2));
 		}
 		
-		for(int i = 1; i <= 4; i++) {
+		for(int i = 0; i <= 4; i++) {
 			Background background = new Background(i);
 			backgrounds.add(background);
 		}
@@ -116,6 +117,19 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			crates.add(new ArrayList<Crate>());
 		}
 		
+		//warehouse stage obstacles
+		crates.get(2).add(new Crate(5,2, "V"));
+		crates.get(2).add(new Crate(8,3, "V"));
+		for(int i = 3; i < 11; i ++) {
+			walls.get(2).add(new Wall(i, 1, "H"));
+			walls.get(2).add(new Wall(i, 5, "H"));
+		}
+		for(int i = 1; i < 6; i ++) {
+			if(i != 3) {
+				walls.get(2).add(new Wall(2, i, "V"));
+				walls.get(2).add(new Wall(11, i, "V"));
+			}
+		}
 		
 		//airbase stage obstacles
 		crates.get(3).add(new Crate(3, 0, "V"));
@@ -276,7 +290,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stu)b
 		
 	}
 

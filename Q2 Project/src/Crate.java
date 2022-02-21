@@ -48,7 +48,8 @@ public class Crate{
 	public void checkCollision(Tank tank) {
 		if(exploded == false) {
 			//tank is to the left of crate
-			if(tank.getX() + 89 > x && tank.getX() + 89 < x + length && tank.getY() + 90 > y && tank.getY() + 6 < y + height && tank.getY() + 86 > y && tank.getY() + 10 < y + height) {
+			if(tank.getX() + 89 > x && tank.getX() + 89 < x + length && tank.getY() + 90 > y && tank.getY() + 6 < y + height
+			&& tank.getY() + 86 > y && tank.getY() + 10 < y + height) {
 				if(tank.getXV() == 4) {
 					tank.setX(tank.getX() - 4);
 				}else if(tank.getXV() == 3) {
@@ -57,7 +58,8 @@ public class Crate{
 			}
 			
 			//tank is to the right of crate
-			if(tank.getX() + 5 < x + length && tank.getX() + 5 > x && tank.getY() + 90 > y && tank.getY() + 6 < y + height && tank.getY() + 86 > y && tank.getY() + 10 < y + height) {
+			if(tank.getX() + 5 < x + length && tank.getX() + 5 > x && tank.getY() + 90 > y && tank.getY() + 6 < y + height 
+			&& tank.getY() + 86 > y && tank.getY() + 10 < y + height) {
 				if(tank.getXV() == -4) {
 					tank.setX(tank.getX() + 4);
 				}else if(tank.getXV() == -3) {
@@ -66,7 +68,8 @@ public class Crate{
 			}
 			
 			//tank is above crate
-			if(tank.getX() + 89 > x && tank.getX() + 6 < x + length && tank.getY() + 90 > y && tank.getY() + 86 <= y && tank.getY() + 90 < y + height) {
+			if(tank.getX() + 89 > x && tank.getX() + 6 < x + length && tank.getY() + 90 > y && tank.getY() + 86 <= y && tank.getY() + 90 < y + height
+			&& tank.getX() + 85 > x && tank.getX() + 10 < x + length) {
 				if(tank.getYV() == 4) {
 					tank.setY(tank.getY() - 4);
 				}else if(tank.getYV() == 3) {
@@ -75,7 +78,8 @@ public class Crate{
 			}
 			
 			//tank is below crate
-			if(tank.getX() + 89 > x && tank.getX() + 6 < x + length && tank.getY() + 6 < y + height && tank.getY() + 10 >= y + height && tank.getY() + 6 > y) {
+			if(tank.getX() + 89 > x && tank.getX() + 6 < x + length && tank.getY() + 6 < y + height && tank.getY() + 10 >= y + height && tank.getY() + 6 > y
+			&& tank.getX() + 85 > x && tank.getX() + 10 < x + length) {
 				if(tank.getYV() == -4) {
 					tank.setY(tank.getY() + 4);
 				}else if(tank.getYV() == -3) {
@@ -127,7 +131,7 @@ public class Crate{
 			particle.paint(g);
 		}
 
-		g.drawRect(x, y, length, height);
+		//g.drawRect(x, y, length, height);
 	}
 
 	

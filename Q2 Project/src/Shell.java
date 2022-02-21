@@ -85,7 +85,7 @@ public class Shell{
 		update();
 		
 		g2.drawImage(img, tx, null);
-		g.drawRect(x + 30, y + 32, 25, 20);
+		//g.drawRect(x + 30, y + 32, 25, 20);
 	}
 
 	
