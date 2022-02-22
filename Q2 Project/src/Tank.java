@@ -184,6 +184,13 @@ public class Tank{
 		this.y = y;
 	}
 	
+	public void setRespawn(int x, int y) {
+		this.x = x * 84 - 5;
+		this.y = y * 84 - 5;
+		startPosX = x * 84 - 5;
+		startPosY = y * 84 - 5;
+	}
+	
 	/* update variables here */
 	private void update() {
 		x += xv;

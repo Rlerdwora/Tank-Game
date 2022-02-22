@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import java.util.ArrayList;
+import java.awt.Font;
 
 public class Frame extends JPanel implements ActionListener, MouseListener, KeyListener {
 	
@@ -25,14 +26,19 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	ArrayList<Shell> p2Shells = new ArrayList<Shell>();
 	ArrayList<ArrayList<Crate>> crates = new ArrayList<ArrayList<Crate>>();
 	ArrayList<ArrayList<Wall>> walls = new ArrayList<ArrayList<Wall>>();	
-	int stageSelect = 1;
-	boolean gameStart = true;
+	Font font = new Font("font", Font.BOLD, 20);		
+	int stageSelect = 0;
+	boolean gameStart = false;
+	int startTimer;
 	
 	public void paint(Graphics g) {
 		super.paintComponent(g);
-		backgrounds.get(stageSelect - 1).paint(g);
+		g.setFont(font);
 		
-		for(Crate x : crates.get(stageSelect - 1)) {
+		//paint all objects
+		backgrounds.get(stageSelect).paint(g);
+		
+		for(Crate x : crates.get(stageSelect)) {
 			x.paint(g);
 			x.checkCollision(p1);
 			x.checkCollision(p2);
@@ -43,7 +49,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				x.checkCollision(y);
 			}
 		}
-		for(Wall x : walls.get(stageSelect - 1)) {
+		for(Wall x : walls.get(stageSelect)) {
 			x.paint(g);
 			x.checkCollision(p1);
 			x.checkCollision(p2);
@@ -70,9 +76,24 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			x.paint(g);
 		}
 		
-		if(gameStart == true) {
+		if(gameStart == true && startTimer <= 0) {
 			p1.paint(g);
 			p2.paint(g);
+		}
+		
+		//start timer countdown
+		if(startTimer > 0) {
+			startTimer --;
+			if(startTimer <= 120 && startTimer > 90) {
+				g.drawString("3", 583, 300);
+			}else if(startTimer <= 90 && startTimer > 60) {
+				g.drawString("2", 583, 300);
+			}else if(startTimer <= 60 && startTimer > 30) {
+				g.drawString("1", 583, 300);
+			}else if(startTimer <= 30 && startTimer > 0) {
+				g.drawString("Go!", 574, 300);
+				if(startTimer == 30) {				}
+			}
 		}
 		
 		if(p1Icons.size() == 0) {
@@ -81,6 +102,11 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			
 		}else {
 			
+		}
+		
+		//messages
+		if(gameStart == false) {
+			g.drawString("Switch Stage with Select, Select Stage with Enter", 360, 300);
 		}
 	}
 	
@@ -107,15 +133,18 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			p2Icons.add(i, new Icon(1085 + -100 * i, 600, 2));
 		}
 		
-		for(int i = 0; i <= 4; i++) {
-			Background background = new Background(i);
-			backgrounds.add(background);
+		for(int i = 0; i < 5; i ++) {
+			backgrounds.add(new Background(i));
 		}
 		
-		for(int i = 0; i < 4; i ++) {
+		for(int i = 0; i < 5; i ++) {
 			walls.add(new ArrayList<Wall>());
 			crates.add(new ArrayList<Crate>());
 		}
+		
+		//grass field stage obstacles
+		
+		//desert stage obstacles
 		
 		//warehouse stage obstacles
 		crates.get(2).add(new Crate(5,2, "V"));
@@ -131,16 +160,19 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			}
 		}
 		
+		//beach stage obstacles
+		
 		//airbase stage obstacles
-		crates.get(3).add(new Crate(3, 0, "V"));
-		crates.get(3).add(new Crate(10, 5, "V"));
-		crates.get(3).add(new Crate(2, 4, "V"));
-		crates.get(3).add(new Crate(5, 4));
-		crates.get(3).add(new Crate(8, 3));
+		crates.get(4).add(new Crate(3, 0, "V"));
+		crates.get(4).add(new Crate(10, 5, "V"));
+		crates.get(4).add(new Crate(2, 4, "V"));
+		crates.get(4).add(new Crate(11, 1, "V"));
+		crates.get(4).add(new Crate(5, 4));
+		crates.get(4).add(new Crate(8, 2));
 		
 		for(int i = 0; i < 4; i ++) {
-			walls.get(3).add(new Wall(i,2, "H"));
-			walls.get(3).add(new Wall(i+ 10,4, "H"));
+			walls.get(4).add(new Wall(i,2, "H"));
+			walls.get(4).add(new Wall(i + 10,4, "H"));
 		}
 	}
 	
@@ -153,18 +185,32 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	}
 	
 	public void stageUp() {
-		if(stageSelect < 4) {
+		if(stageSelect == 4) {
+			stageSelect = 0;
+		}else {
 			stageSelect ++;
-		}else {
-			stageSelect = 1;
 		}
-	}
+		
+		switch(stageSelect) {
+		case 0:
+			
+			break;	
+		
+		case 1:
+			break;
+				
+		case 2:
+			p1.setRespawn(0, 3);
+			p2.setRespawn(14, 3);
+			break;
+			
+		case 3:
+			break;
 	
-	public void stageDown() {
-		if(stageSelect >= 1) {
-			stageSelect --;
-		}else {
-			stageSelect = 4;
+		case 4:
+			p1.setRespawn(0, 0);
+			p2.setRespawn(14, 7);
+			break;
 		}
 	}
 	
@@ -248,6 +294,15 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				p2.fire();
 				Shell s = new Shell(p2.getX(), p2.getY(), p2.getH(), p2.getV());
 				p2Shells.add(s);
+			}
+		}else {
+			if(arg0.getKeyCode() == 16) {
+				stageUp();
+			}
+			
+			if(arg0.getKeyCode() == 10) {
+				gameStart = true;
+				startTimer = 120;
 			}
 		}
 	}

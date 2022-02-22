@@ -23,6 +23,7 @@ public class Wall{
 	}
 	
 	public void checkCollision(Tank tank) {
+		//tank is to the left of wall
 		if(tank.getX() + 89 > x && tank.getX() + 89 < x + 84 && tank.getY() + 90 > y && tank.getY() + 6 < y + 84 && tank.getY() + 86 > y && tank.getY() + 10 < y + 84) {
 			if(tank.getXV() == 4) {
 				tank.setX(tank.getX() - 4);
@@ -31,7 +32,7 @@ public class Wall{
 			}
 		}
 		
-		//tank is to the right of crate
+		//tank is to the right of wall
 		if(tank.getX() + 5 < x + 84 && tank.getX() + 5 > x && tank.getY() + 90 > y && tank.getY() + 6 < y + 84 && tank.getY() + 86 > y && tank.getY() + 10 < y + 84) {
 			if(tank.getXV() == -4) {
 				tank.setX(tank.getX() + 4);
@@ -40,7 +41,7 @@ public class Wall{
 			}
 		}
 		
-		//tank is above crate
+		//tank is above wall
 		if(tank.getX() + 89 > x && tank.getX() + 6 < x + 84 && tank.getY() + 90 > y && tank.getY() + 86 <= y && tank.getY() + 90 < y + 84 && tank.getX() + 85 > x && tank.getX() + 10 < x + 84) {
 			if(tank.getYV() == 4) {
 				tank.setY(tank.getY() - 4);
@@ -49,7 +50,7 @@ public class Wall{
 			}
 		}
 		
-		//tank is below crate
+		//tank is below wall
 		if(tank.getX() + 89 > x && tank.getX() + 6 < x + 84 && tank.getY() + 6 < y + 84 && tank.getY() + 10 >= y + 84 && tank.getY() + 6 > y && tank.getX() + 85 > x && tank.getX() + 10 < x + 84) {
 			if(tank.getYV() == -4) {
 				tank.setY(tank.getY() + 4);

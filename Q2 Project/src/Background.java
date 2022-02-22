@@ -82,7 +82,7 @@ public class Background{
 			b[5][1] = new Tile(5, 1, "sand");
 			b[8][5] = new Tile(8, 5, "sand");
 			b[9][5] = new Tile(9, 5, "sand");
-		}else if(i == 5) {
+		}else if(i == 5){
 			
 		}
 	}
