@@ -25,7 +25,7 @@ public class Tank{
 		startPosY = y * 84 - 5;
 		this.number = number;
 		this.horizontal = horizontal;
-		control = true;
+		control = false;
 		invincible = false;
 		exploded = false;
 		deathTimer = 0;
@@ -49,6 +49,7 @@ public class Tank{
 	public void explode() {
 		if(invincible == false) {
 			Frame.subtractLife(number);
+			control = false;
 			exploded = true;
 			deathTimer = 40;
 			shellTimer = 0;
@@ -64,6 +65,7 @@ public class Tank{
 	
 	public void respawn() {
 		exploded = false;
+		control = false;
 		respawnTimer = 300;
 		x = startPosX;
 		y = startPosY;
@@ -185,8 +187,8 @@ public class Tank{
 	}
 	
 	public void setRespawn(int x, int y) {
-		this.x = x * 84 - 5;
-		this.y = y * 84 - 5;
+		setX(x * 84 - 5);
+		setY(y * 84 - 5);
 		startPosX = x * 84 - 5;
 		startPosY = y * 84 - 5;
 	}
@@ -325,7 +327,15 @@ public class Tank{
 			//g.drawRect(x + 5, y + 6, 84, 84);
 		}		
 	}
-
+	
+	public void preview (Graphics g) {
+		//these are the 2 lines of code needed draw an image on the screen
+		Graphics2D g2 = (Graphics2D) g;
+		Image preview = getImage("/imgs/Tank" + number + "Marker.png"); 	
+		AffineTransform previewTx = AffineTransform.getTranslateInstance(x + 5, y + 5);
+		previewTx.scale(.75, .75);
+		g2.drawImage(preview, previewTx, null);
+	}
 	
 	private void init(double a, double b) {
 		tx.setToTranslation(a, b);

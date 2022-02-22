@@ -79,6 +79,9 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		if(gameStart == true && startTimer <= 0) {
 			p1.paint(g);
 			p2.paint(g);
+		}else {
+			p1.preview(g);
+			p2.preview(g);
 		}
 		
 		//start timer countdown
