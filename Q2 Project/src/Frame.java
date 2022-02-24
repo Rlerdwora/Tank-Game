@@ -18,7 +18,7 @@ import java.awt.Font;
 public class Frame extends JPanel implements ActionListener, MouseListener, KeyListener {
 	
 	Tank p1 = new Tank(0,0,1,"Right");
-	Tank p2 = new Tank(14,7,2,"Left");
+	Tank p2 = new Tank(13,6,2,"Left");
 	ArrayList<Background> backgrounds = new ArrayList<Background>();
 	static ArrayList<Icon> p1Icons = new ArrayList<Icon>();
 	static ArrayList<Icon> p2Icons = new ArrayList<Icon>();
@@ -99,17 +99,20 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			}
 		}
 		
-		if(p1Icons.size() == 0) {
-			
-		}else if(p2Icons.size() == 0) {
-			
-		}else {
-			
+		if(p1Icons.size() == 0 && p2Icons.size() > 0) {
+			g.drawString("Player 2 Wins!", 573, 300);
+		}else if(p2Icons.size() == 0 && p1Icons.size() > 0) {
+			g.drawString("Player 1 Wins!", 573, 300);
+		}else if(p2Icons.size() == 0 && p1Icons.size() == 0){
+			g.drawString("Tie!", 572, 300);
 		}
 		
 		//messages
 		if(gameStart == false) {
 			g.drawString("Switch Stage with Select, Select Stage with Enter", 360, 300);
+		}
+		if(p1Icons.size() == 0 || p2Icons.size() == 0) {
+			g.drawString("Go Back to Stage Selection with Enter", 444, 350);
 		}
 	}
 	
@@ -131,7 +134,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
 		
-		for(int i = 0; i < 3; i ++) {
+		for(int i = 0; i < 1; i ++) {
 			p1Icons.add(i, new Icon(10 + 100 * i, 600, 1));
 			p2Icons.add(i, new Icon(1085 + -100 * i, 600, 2));
 		}
@@ -204,7 +207,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				
 		case 2:
 			p1.setRespawn(0, 3);
-			p2.setRespawn(14, 3);
+			p2.setRespawn(13, 3);
 			break;
 			
 		case 3:
@@ -212,7 +215,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	
 		case 4:
 			p1.setRespawn(0, 0);
-			p2.setRespawn(14, 7);
+			p2.setRespawn(13, 6);
 			break;
 		}
 	}
@@ -297,6 +300,16 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				p2.fire();
 				Shell s = new Shell(p2.getX(), p2.getY(), p2.getH(), p2.getV());
 				p2Shells.add(s);
+			}
+			
+			if(arg0.getKeyCode() == 10) {
+				if(p1Icons.size() == 0 || p2Icons.size() == 0) {
+					gameStart = false;
+					for(int i = 0; i < 1; i ++) {
+						p1Icons.add(i, new Icon(10 + 100 * i, 600, 1));
+						p2Icons.add(i, new Icon(1085 + -100 * i, 600, 2));
+					}
+				}
 			}
 		}else {
 			if(arg0.getKeyCode() == 16) {
