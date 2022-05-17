@@ -35,53 +35,55 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		super.paintComponent(g);
 		g.setFont(font);
 		
-		//paint all objects
-		backgrounds.get(stageSelect).paint(g);
-		
-		for(Crate x : crates.get(stageSelect)) {
-			x.paint(g);
-			x.checkCollision(p1);
-			x.checkCollision(p2);
-			for(Shell y : p1Shells) {
-				x.checkCollision(y);
+		if(backgrounds.size() > 0 && walls.size() > 0 && crates.size() > 0) {
+			//paint all objects
+			backgrounds.get(stageSelect).paint(g);
+			
+			for(Crate x : crates.get(stageSelect)) {
+				x.paint(g);
+				x.checkCollision(p1);
+				x.checkCollision(p2);
+				for(Shell y : p1Shells) {
+					x.checkCollision(y);
+				}
+				for(Shell y : p2Shells) {
+					x.checkCollision(y);
+				}
 			}
-			for(Shell y : p2Shells) {
-				x.checkCollision(y);
+			for(Wall x : walls.get(stageSelect)) {
+				x.paint(g);
+				x.checkCollision(p1);
+				x.checkCollision(p2);
+				for(Shell y : p1Shells) {
+					x.checkCollision(y);
+				}
+				for(Shell y : p2Shells) {
+					x.checkCollision(y);
+				}
 			}
-		}
-		for(Wall x : walls.get(stageSelect)) {
-			x.paint(g);
-			x.checkCollision(p1);
-			x.checkCollision(p2);
-			for(Shell y : p1Shells) {
-				x.checkCollision(y);
+			
+			for(Shell x : p1Shells) {
+				x.paint(g);
+				p2.checkCollision(x);
 			}
-			for(Shell y : p2Shells) {
-				x.checkCollision(y);
+			for(Shell x : p2Shells) {
+				x.paint(g);
+				p1.checkCollision(x);
 			}
-		}
-		
-		for(Shell x : p1Shells) {
-			x.paint(g);
-			p2.checkCollision(x);
-		}
-		for(Shell x : p2Shells) {
-			x.paint(g);
-			p1.checkCollision(x);
-		}
-		for(Icon x : p1Icons) {
-			x.paint(g);
-		}
-		for(Icon x : p2Icons) {
-			x.paint(g);
-		}
-		
-		if(gameStart == true && startTimer <= 0) {
-			p1.paint(g);
-			p2.paint(g);
-		}else {
-			p1.preview(g);
-			p2.preview(g);
+			for(Icon x : p1Icons) {
+				x.paint(g);
+			}
+			for(Icon x : p2Icons) {
+				x.paint(g);
+			}
+			
+			if(gameStart == true && startTimer <= 0) {
+				p1.paint(g);
+				p2.paint(g);
+			}else {
+				p1.preview(g);
+				p2.preview(g);
+			}
 		}
 		
 		//start timer countdown
@@ -134,7 +136,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
 		
-		for(int i = 0; i < 1; i ++) {
+		for(int i = 0; i < 3; i ++) {
 			p1Icons.add(i, new Icon(10 + 100 * i, 600, 1));
 			p2Icons.add(i, new Icon(1085 + -100 * i, 600, 2));
 		}
@@ -305,7 +307,13 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			if(arg0.getKeyCode() == 10) {
 				if(p1Icons.size() == 0 || p2Icons.size() == 0) {
 					gameStart = false;
-					for(int i = 0; i < 1; i ++) {
+					while(p1Icons.size() > 0) {
+						p1Icons.remove(0);
+					}
+					while(p2Icons.size() > 0) {
+						p2Icons.remove(0);
+					}
+					for(int i = 0; i < 3; i ++) {
 						p1Icons.add(i, new Icon(10 + 100 * i, 600, 1));
 						p2Icons.add(i, new Icon(1085 + -100 * i, 600, 2));
 					}

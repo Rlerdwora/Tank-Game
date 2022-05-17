@@ -97,18 +97,5 @@ public class Background{
 				b[i][j].paint(g);
 			}
 		}
-		
-		int x = 0, y = 1, xCount = 0, yCount = 0;
-		
-		while(xCount < 14) {
-			x = 0;
-			y = 1;
-			while(yCount < 7) {
-				g.drawRect(x + 84 * xCount, y + 84 * yCount, 84, 84);
-				yCount ++;
-			}
-			yCount = 0;
-			xCount ++;
-		}
 	}
 }

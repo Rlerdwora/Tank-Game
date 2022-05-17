@@ -28,7 +28,6 @@ public class Tile{
 		Graphics2D g2 = (Graphics2D) g;
 
 		g2.drawImage(img, tx, null);
-		g.drawRect(x,y,84,84);
 	}
 
 	

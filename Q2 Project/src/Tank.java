@@ -64,20 +64,8 @@ public class Tank{
 	}
 	
 	public void respawn() {
-		if(number == 1 && Frame.p1Icons.size() > 0) {
-			exploded = false;
-			control = false;
-			respawnTimer = 500;
-			x = startPosX;
-			y = startPosY;
-			vertical = "";
-			action = "Respawn";
-			if(number == 1) {
-				horizontal = "Right";
-			}else {
-				horizontal = "Left";
-			}
-		}else if(number == 2 && Frame.p2Icons.size() > 0){
+		if((number == 1 && Frame.p1Icons.size() > 0)
+		|| (number == 2 && Frame.p2Icons.size() > 0)) {
 			exploded = false;
 			control = false;
 			respawnTimer = 500;
@@ -300,8 +288,8 @@ public class Tank{
 		if(respawnTimer > 0) {
 			control = false;
 			respawnTimer -= 10;
+			invinTimer = 40;
 			if(respawnTimer == 0) {
-				invinTimer = 40;
 				respawnTimer --;
 			}
 		}else {
@@ -339,7 +327,6 @@ public class Tank{
 		}else{
 			g2.drawImage(img, tx, null);
 			g.fillRect(x + 8, y, shellTimer, 10);
-			//g.drawRect(x + 5, y + 6, 84, 84);
 		}		
 	}
 	
@@ -347,7 +334,7 @@ public class Tank{
 		//these are the 2 lines of code needed draw an image on the screen
 		Graphics2D g2 = (Graphics2D) g;
 		Image preview = getImage("/imgs/Tank" + number + "Marker.png"); 	
-		AffineTransform previewTx = AffineTransform.getTranslateInstance(x + 5,y + 5);
+		AffineTransform previewTx = AffineTransform.getTranslateInstance(startPosX + 5, startPosY + 5);
 		previewTx.scale(.75, .75);
 		g2.drawImage(preview, previewTx, null);
 	}
