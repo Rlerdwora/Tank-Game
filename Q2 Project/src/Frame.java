@@ -317,6 +317,9 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 						p1Icons.add(i, new Icon(10 + 100 * i, 600, 1));
 						p2Icons.add(i, new Icon(1085 + -100 * i, 600, 2));
 					}
+					
+					p1 = new Tank(0,0,1,"Right");
+					p2 = new Tank(13,6,2,"Left");
 				}
 			}
 		}else {
