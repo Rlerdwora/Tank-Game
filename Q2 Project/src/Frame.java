@@ -26,8 +26,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	ArrayList<Shell> p2Shells = new ArrayList<Shell>();
 	ArrayList<ArrayList<Crate>> crates = new ArrayList<ArrayList<Crate>>();
 	ArrayList<ArrayList<Wall>> walls = new ArrayList<ArrayList<Wall>>();	
-	Font font = new Font("font", Font.BOLD, 20);		
-	int stageSelect = 0;
+	Font font = new Font("font", Font.BOLD, 20);
+	int stageSelect = 0, numStages = 5;
 	boolean gameStart = false;
 	int startTimer;
 	
@@ -141,17 +141,34 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			p2Icons.add(i, new Icon(1085 + -100 * i, 600, 2));
 		}
 		
-		for(int i = 0; i < 5; i ++) {
+		for(int i = 0; i < numStages; i ++) {
 			backgrounds.add(new Background(i));
 		}
 		
-		for(int i = 0; i < 5; i ++) {
+		for(int i = 0; i < numStages; i ++) {
 			walls.add(new ArrayList<Wall>());
 			crates.add(new ArrayList<Crate>());
 		}
 		
+		deleteObstacles();
+		loadObstacles();
+	}
+	
+	public void deleteObstacles() {
+		for(int i = 0; i < numStages; i++) {
+			while(crates.get(i).size() != 0) {
+				crates.get(i).remove(0);
+			}
+			
+			while(walls.get(i).size() != 0) {
+				walls.get(i).remove(0);
+			}
+		}
+	}
+	
+	public void loadObstacles() {
 		//grass field stage obstacles
-		
+
 		//desert stage obstacles
 		
 		//warehouse stage obstacles
@@ -161,6 +178,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			walls.get(2).add(new Wall(i, 1, "H"));
 			walls.get(2).add(new Wall(i, 5, "H"));
 		}
+		
 		for(int i = 1; i < 6; i ++) {
 			if(i != 3) {
 				walls.get(2).add(new Wall(2, i, "V"));
@@ -220,6 +238,26 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			p2.setRespawn(13, 6);
 			break;
 		}
+	}
+	
+	public void reset() {
+		gameStart = false;
+		while(p1Icons.size() > 0) {
+			p1Icons.remove(0);
+		}
+		while(p2Icons.size() > 0) {
+			p2Icons.remove(0);
+		}
+		for(int i = 0; i < 3; i ++) {
+			p1Icons.add(i, new Icon(10 + 100 * i, 600, 1));
+			p2Icons.add(i, new Icon(1085 + -100 * i, 600, 2));
+		}
+		
+		p1 = new Tank(0,0,1,"Right");
+		p2 = new Tank(13,6,2,"Left");
+		
+		deleteObstacles();
+		loadObstacles();
 	}
 	
 	@Override
@@ -306,20 +344,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			
 			if(arg0.getKeyCode() == 10) {
 				if(p1Icons.size() == 0 || p2Icons.size() == 0) {
-					gameStart = false;
-					while(p1Icons.size() > 0) {
-						p1Icons.remove(0);
-					}
-					while(p2Icons.size() > 0) {
-						p2Icons.remove(0);
-					}
-					for(int i = 0; i < 3; i ++) {
-						p1Icons.add(i, new Icon(10 + 100 * i, 600, 1));
-						p2Icons.add(i, new Icon(1085 + -100 * i, 600, 2));
-					}
-					
-					p1 = new Tank(0,0,1,"Right");
-					p2 = new Tank(13,6,2,"Left");
+					reset();
 				}
 			}
 		}else {
